@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c2rfsvpt32ies"]
+[gd_scene load_steps=20 format=3 uid="uid://c2rfsvpt32ies"]
 
 [ext_resource type="Texture2D" uid="uid://378iha5emwdf" path="res://sprites/slimidle.png" id="1_by1ao"]
 [ext_resource type="Script" uid="uid://pj5bvhggucv3" path="res://scripts/enemy.gd" id="1_ck05h"]
@@ -107,6 +107,9 @@ size = Vector2(14, 5)
 [sub_resource type="CircleShape2D" id="CircleShape2D_ludtu"]
 radius = 98.005104
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ck05h"]
+radius = 12.0415945
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_ck05h")
 
@@ -119,10 +122,21 @@ animation = &"idle"
 position = Vector2(1, -1.5)
 shape = SubResource("RectangleShape2D_hojqu")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="detrection zone" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detrection zone"]
 shape = SubResource("CircleShape2D_ludtu")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CircleShape2D_ck05h")
+
+[node name="take_damage_cooldown" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="body_entered" from="detrection zone" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="detrection zone" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
