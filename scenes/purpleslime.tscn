@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c2rfsvpt32ies"]
+[gd_scene load_steps=21 format=3 uid="uid://c2rfsvpt32ies"]
 
 [ext_resource type="Texture2D" uid="uid://378iha5emwdf" path="res://sprites/slimidle.png" id="1_by1ao"]
 [ext_resource type="Script" uid="uid://pj5bvhggucv3" path="res://scripts/enemy.gd" id="1_ck05h"]
@@ -110,6 +110,9 @@ radius = 98.005104
 [sub_resource type="CircleShape2D" id="CircleShape2D_ck05h"]
 radius = 12.0415945
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_hojqu"]
+radius = 12.0
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_ck05h")
 
@@ -129,11 +132,24 @@ shape = SubResource("CircleShape2D_ludtu")
 
 [node name="hitbox" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+[node name="right" type="CollisionShape2D" parent="hitbox"]
 shape = SubResource("CircleShape2D_ck05h")
+
+[node name="left" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(-6, 0)
+shape = SubResource("CircleShape2D_hojqu")
 
 [node name="take_damage_cooldown" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0.31764707, 0.91764706, 0, 1)
+offset_left = -9.999999
+offset_top = 6.9999995
+offset_right = 189.99998
+offset_bottom = 47.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
 
 [connection signal="body_entered" from="detrection zone" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="detrection zone" to="." method="_on_area_2d_body_exited"]

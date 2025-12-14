@@ -17,6 +17,7 @@ var last_dir = "down"
 func _physics_process(delta):
 	attack()
 	enemy_attack()
+	update_health()
 	if health <= 0:
 		player_alive = false
 		health = 0
@@ -31,7 +32,7 @@ func _physics_process(delta):
 	_update_anim()
 
 func _update_anim():
-	if attack_ip:
+	if attack_ip or health == 0:
 		return
 	var anim = ""
 	
@@ -63,9 +64,15 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 func enemy_attack():
 	if enemy_inattack_range and enemy_attack_cooldown == true:
 		health = health - 10
-		print(health)
 		enemy_attack_cooldown = false
 		$attack_cooldown.start()
+		if health <= 0:
+				velocity = Vector2.ZERO
+				set_process(false)
+				set_physics_process(false)
+				$AnimatedSprite2D.play("death_right")
+				await $AnimatedSprite2D.animation_finished
+				get_tree().reload_current_scene()
 
 
 func _on_timer_timeout() -> void:
@@ -93,3 +100,12 @@ func _on_deal_attack_timer_timeout() -> void:
 	$deal_attack_timer.stop()
 	Global.player_current_attack = false
 	attack_ip = false
+
+func update_health():
+	var healthbar = $healthbar
+	healthbar.value = health
+	
+	if health >= 100:
+		healthbar.hide()
+	else:
+		healthbar.show()

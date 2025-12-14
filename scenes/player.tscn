@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://bl1q7wod3c3q3"]
+[gd_scene load_steps=67 format=3 uid="uid://bl1q7wod3c3q3"]
 
 [ext_resource type="Texture2D" uid="uid://f4318kvo18qa" path="res://sprites/down-attack.png" id="1_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://s3sok2cvk77f" path="res://sprites/idle-down.png" id="1_g2els"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://c6ef68obf5oa5" path="res://sprites/right-attack.png" id="3_f1ej7"]
 [ext_resource type="Texture2D" uid="uid://dquchweaem14h" path="res://sprites/walk-up.png" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://dvi3adlu7ljlq" path="res://sprites/up-attack.png" id="4_oprun"]
+[ext_resource type="Texture2D" uid="uid://cy2ybfh2a0h1o" path="res://sprites/slimedeath.png" id="6_f1ej7"]
 [ext_resource type="Texture2D" uid="uid://bpp1phqqwi4pt" path="res://sprites/walk-left.png" id="6_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://crymoqp26r3jr" path="res://sprites/walk-right.png" id="7_y4r1p"]
 
@@ -93,6 +94,34 @@ region = Rect2(96, 0, 32, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_g5jhy"]
 atlas = ExtResource("4_oprun")
 region = Rect2(128, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_holxr"]
+atlas = ExtResource("6_f1ej7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx1m4"]
+atlas = ExtResource("6_f1ej7")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
+atlas = ExtResource("6_f1ej7")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2ulf"]
+atlas = ExtResource("6_f1ej7")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6e8lb"]
+atlas = ExtResource("6_f1ej7")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gdjj"]
+atlas = ExtResource("6_f1ej7")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sc3ue"]
+atlas = ExtResource("6_f1ej7")
+region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("1_g2els")
@@ -266,6 +295,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_holxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx1m4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gjji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2ulf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6e8lb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gdjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sc3ue")
+}],
+"loop": false,
+"name": &"death_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_dqkch")
 }, {
 "duration": 1.0,
@@ -384,7 +439,7 @@ script = ExtResource("1_jej6c")
 position = Vector2(-2, 4.5)
 scale = Vector2(0.6875, 0.65625006)
 sprite_frames = SubResource("SpriteFrames_ur7pv")
-animation = &"idle_right"
+animation = &"death_right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 6)
@@ -404,6 +459,15 @@ wait_time = 0.5
 
 [node name="deal_attack_timer" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0.31860414, 0.9184813, 3.85046e-07, 1)
+offset_left = -9.0
+offset_top = 14.000001
+offset_right = 100.99998
+offset_bottom = 41.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
 
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
