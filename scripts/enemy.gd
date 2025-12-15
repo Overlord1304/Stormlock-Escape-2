@@ -6,7 +6,7 @@ var player = null
 var health = 80
 var player_inattack_zone = false
 var can_take_damage = true
-
+signal died
 func _physics_process(delta) -> void:
 	update_health()
 	deal_with_damage()
@@ -63,6 +63,7 @@ func deal_with_damage():
 			$take_damage_cooldown.start()
 			can_take_damage = false
 			if health <= 0:
+				died.emit()
 				self.queue_free()
 
 

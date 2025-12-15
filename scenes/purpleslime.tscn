@@ -107,11 +107,11 @@ size = Vector2(14, 5)
 [sub_resource type="CircleShape2D" id="CircleShape2D_ludtu"]
 radius = 98.005104
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ck05h"]
-radius = 12.0415945
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ck05h"]
+size = Vector2(25, 14)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hojqu"]
-radius = 12.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ludtu"]
+size = Vector2(22, 14)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_ck05h")
@@ -133,11 +133,12 @@ shape = SubResource("CircleShape2D_ludtu")
 [node name="hitbox" type="Area2D" parent="."]
 
 [node name="right" type="CollisionShape2D" parent="hitbox"]
-shape = SubResource("CircleShape2D_ck05h")
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_ck05h")
 
 [node name="left" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-6, 0)
-shape = SubResource("CircleShape2D_hojqu")
+position = Vector2(-7, -1)
+shape = SubResource("RectangleShape2D_ludtu")
 
 [node name="take_damage_cooldown" type="Timer" parent="."]
 wait_time = 0.5

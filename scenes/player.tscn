@@ -249,7 +249,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bj30b")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_left",
 "speed": 10.0
 }, {
@@ -269,7 +269,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cs1tg")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_right",
 "speed": 10.0
 }, {
@@ -289,7 +289,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g5jhy")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_up",
 "speed": 10.0
 }, {
@@ -439,7 +439,7 @@ script = ExtResource("1_jej6c")
 position = Vector2(-2, 4.5)
 scale = Vector2(0.6875, 0.65625006)
 sprite_frames = SubResource("SpriteFrames_ur7pv")
-animation = &"death_right"
+animation = &"attack_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 6)
