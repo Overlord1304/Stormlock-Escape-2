@@ -1,0 +1,34 @@
+extends Node2D
+
+@onready var score_label = $ui/ScoreLabel
+@onready var high_score_label = $ui/HighScoreLabel
+var has_saved = false
+func _ready():
+	load_high_score()
+	Global.score = 0
+	Global.player_died = false
+func _process(delta: float) -> void:
+	if not Global.player_died:
+		check_high_score()
+		score_label.text = "Score: " + str(Global.score)
+		high_score_label.text = "High Score: " + str(Global.high_score)
+	else:
+		if not has_saved:
+			save_high_score()
+			has_saved = true
+func load_high_score():
+	var save_path = "user://saves.save"
+	if FileAccess.file_exists(save_path):
+		var file = FileAccess.open(save_path,FileAccess.READ)
+		Global.high_score = int(file.get_as_text())
+		file.close()
+
+func check_high_score():
+	if Global.score > Global.high_score:
+		Global.high_score = Global.score
+		
+func save_high_score():
+	var save_path = "user://saves.save"
+	var file = FileAccess.open(save_path,FileAccess.WRITE)
+	file.store_string(str(Global.high_score))
+	file.close()

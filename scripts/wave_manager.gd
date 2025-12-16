@@ -22,12 +22,12 @@ func start_next_wave():
 
 	enemies_alive = enemies_per_wave + current_wave * 2
 
-	# Copy spawn points so we can remove used ones
+	
 	available_spawns = spawn_points.duplicate()
 
 	for i in enemies_alive:
 		if available_spawns.is_empty():
-			break # no more safe spawn points
+			break 
 		spawn_enemy()
 
 func spawn_enemy():

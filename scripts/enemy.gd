@@ -6,10 +6,14 @@ var player = null
 var health = 80
 var player_inattack_zone = false
 var can_take_damage = true
+var is_dead = false
 signal died
 func _physics_process(delta) -> void:
+
 	update_health()
 	deal_with_damage()
+	if is_dead:
+		return
 	if player_chase and player:
 		var to_player = player.position - position
 		var distance = to_player.length()
@@ -58,13 +62,13 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 func deal_with_damage():
 	if player_inattack_zone and Global.player_current_attack == true:
 		if can_take_damage == true:
-			health = health - 20
-			print(health)
+			health -= 20
 			$take_damage_cooldown.start()
 			can_take_damage = false
-			if health <= 0:
-				died.emit()
-				self.queue_free()
+			if health <= 0 and not is_dead:
+				die()
+				return
+
 
 
 func _on_take_damage_cooldown_timeout() -> void:
@@ -77,3 +81,19 @@ func update_health():
 		healthbar.hide()
 	else:
 		healthbar.show()
+
+func die():
+	is_dead = true
+	player_chase = false
+	can_take_damage = false
+	$AnimatedSprite2D.stop()
+	$AnimatedSprite2D.play("death")
+	$hitbox/right.disabled = true
+	$hitbox/left.disabled = true
+	
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if is_dead and $AnimatedSprite2D.animation == "death":
+		Global.score += 20
+		died.emit()
+		queue_free()

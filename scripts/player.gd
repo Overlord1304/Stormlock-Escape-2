@@ -3,7 +3,7 @@ extends CharacterBody2D
 var enemy_inattack_range = false
 var enemy_attack_cooldown = true
 var health = 100
-var player_alive = true
+
 
 var attack_ip = false
 
@@ -19,7 +19,6 @@ func _physics_process(delta):
 	enemy_attack()
 	update_health()
 	if health <= 0:
-		player_alive = false
 		health = 0
 	direction = Vector2.ZERO
 	direction.x = Input.get_axis("ui_left","ui_right")
@@ -67,6 +66,7 @@ func enemy_attack():
 		enemy_attack_cooldown = false
 		$attack_cooldown.start()
 		if health <= 0:
+				Global.player_died = true
 				velocity = Vector2.ZERO
 				set_process(false)
 				set_physics_process(false)

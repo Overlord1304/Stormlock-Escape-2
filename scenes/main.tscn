@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://egov8gpmx4rd"]
+[gd_scene load_steps=12 format=4 uid="uid://egov8gpmx4rd"]
 
 [ext_resource type="PackedScene" uid="uid://bl1q7wod3c3q3" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://xydgxot5au6r" path="res://scripts/game.gd" id="1_tefeu"]
 [ext_resource type="Texture2D" uid="uid://oyf3x5vwmnkd" path="res://sprites/DesertTiles.png" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://c2rfsvpt32ies" path="res://scenes/purpleslime.tscn" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://ehxsgvn1u7u0" path="res://scripts/wave_manager.gd" id="4_tbgi4"]
+[ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="5_tbgi4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
 texture = ExtResource("3_sugp2")
@@ -175,6 +177,7 @@ sources/0 = SubResource("TileSetAtlasSource_sugp2")
 size = Vector2(15, 14)
 
 [node name="main" type="Node2D"]
+script = ExtResource("1_tefeu")
 
 [node name="player" parent="." instance=ExtResource("1_o5qli")]
 position = Vector2(455, 269)
@@ -435,9 +438,6 @@ shape = SubResource("RectangleShape2D_sugp2")
 position = Vector2(745, 249)
 shape = SubResource("RectangleShape2D_sugp2")
 
-[node name="purpleslime" parent="." instance=ExtResource("4_jyhfs")]
-position = Vector2(540, 366)
-
 [node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="left half" type="Node2D" parent="SpawnPoints"]
@@ -596,4 +596,32 @@ offset_left = 502.0
 offset_top = 9.0
 offset_right = 609.0
 offset_bottom = 55.0
+theme_override_colors/font_color = Color(1, 0.64388293, 0.47598565, 1)
+theme_override_colors/font_outline_color = Color(1, 0.40392157, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_tbgi4")
 theme_override_font_sizes/font_size = 32
+
+[node name="ScoreLabel" type="Label" parent="ui"]
+offset_left = 12.0
+offset_top = 9.0
+offset_right = 119.0
+offset_bottom = 55.0
+theme_override_colors/font_color = Color(1, 0.64388293, 0.47598565, 1)
+theme_override_colors/font_outline_color = Color(1, 0.40392157, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_tbgi4")
+theme_override_font_sizes/font_size = 32
+text = "Score: 0"
+
+[node name="HighScoreLabel" type="Label" parent="ui"]
+offset_left = 12.0
+offset_top = 58.0
+offset_right = 183.0
+offset_bottom = 104.0
+theme_override_colors/font_color = Color(1, 0.64388293, 0.47598565, 1)
+theme_override_colors/font_outline_color = Color(1, 0.40392157, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_tbgi4")
+theme_override_font_sizes/font_size = 25
+text = "High Score: 0"

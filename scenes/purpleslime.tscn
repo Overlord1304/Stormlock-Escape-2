@@ -1,8 +1,29 @@
-[gd_scene load_steps=21 format=3 uid="uid://c2rfsvpt32ies"]
+[gd_scene load_steps=27 format=3 uid="uid://c2rfsvpt32ies"]
 
 [ext_resource type="Texture2D" uid="uid://378iha5emwdf" path="res://sprites/slimidle.png" id="1_by1ao"]
 [ext_resource type="Script" uid="uid://pj5bvhggucv3" path="res://scripts/enemy.gd" id="1_ck05h"]
 [ext_resource type="Texture2D" uid="uid://de7jseeqnyttt" path="res://sprites/slimemove.png" id="2_ck05h"]
+[ext_resource type="Texture2D" uid="uid://dlqgxcserfkdf" path="res://sprites/slime death.png" id="2_hojqu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5p5h"]
+atlas = ExtResource("2_hojqu")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_njgmk"]
+atlas = ExtResource("2_hojqu")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mvkc"]
+atlas = ExtResource("2_hojqu")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3uh4w"]
+atlas = ExtResource("2_hojqu")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3a71v"]
+atlas = ExtResource("2_hojqu")
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hojqu"]
 atlas = ExtResource("1_by1ao")
@@ -56,6 +77,26 @@ region = Rect2(90, 0, 30, 30)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_a5p5h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_njgmk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mvkc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3uh4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3a71v")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_hojqu")
 }, {
 "duration": 1.0,
@@ -101,17 +142,17 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hojqu"]
-size = Vector2(14, 5)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_ludtu"]
 radius = 98.005104
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ck05h"]
-size = Vector2(25, 14)
+size = Vector2(27, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ludtu"]
-size = Vector2(22, 14)
+size = Vector2(24, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hojqu"]
+size = Vector2(20, 17)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_ck05h")
@@ -121,10 +162,6 @@ position = Vector2(-3, -4)
 sprite_frames = SubResource("SpriteFrames_a5p5h")
 animation = &"idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, -1.5)
-shape = SubResource("RectangleShape2D_hojqu")
-
 [node name="detrection zone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detrection zone"]
@@ -133,11 +170,11 @@ shape = SubResource("CircleShape2D_ludtu")
 [node name="hitbox" type="Area2D" parent="."]
 
 [node name="right" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-0.5, -1)
+position = Vector2(0.5, -1)
 shape = SubResource("RectangleShape2D_ck05h")
 
 [node name="left" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-7, -1)
+position = Vector2(-8, -1)
 shape = SubResource("RectangleShape2D_ludtu")
 
 [node name="take_damage_cooldown" type="Timer" parent="."]
@@ -152,6 +189,11 @@ offset_bottom = 47.0
 scale = Vector2(0.1, 0.1)
 show_percentage = false
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_hojqu")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="detrection zone" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="detrection zone" to="." method="_on_area_2d_body_exited"]
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
