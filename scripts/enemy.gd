@@ -1,5 +1,6 @@
 extends CharacterBody2D
-
+var storm_push = Vector2.ZERO
+var storm_push_strength = 100
 var speed = 60
 var player_chase = false
 var player = null
@@ -34,7 +35,9 @@ func _physics_process(delta) -> void:
 			$hitbox/right.disabled = false
 	else:
 		$AnimatedSprite2D.play("idle")
-
+	velocity += storm_push
+	storm_push = Vector2.ZERO
+	move_and_slide()
 
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):

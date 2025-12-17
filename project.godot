@@ -29,6 +29,8 @@ player=""
 "spawn point"=""
 "storm left"=""
 "storm right"=""
+enemy=""
+storm=""
 
 [input]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://egov8gpmx4rd"]
+[gd_scene load_steps=14 format=4 uid="uid://egov8gpmx4rd"]
 
 [ext_resource type="PackedScene" uid="uid://bl1q7wod3c3q3" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://xydgxot5au6r" path="res://scripts/game.gd" id="1_tefeu"]
@@ -176,6 +176,9 @@ sources/0 = SubResource("TileSetAtlasSource_sugp2")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
 size = Vector2(15, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6xl0"]
+size = Vector2(1947, 170)
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_tefeu")
@@ -640,21 +643,31 @@ theme_override_font_sizes/font_size = 25
 
 [node name="storm" type="Node2D" parent="."]
 
-[node name="CharacterBody2D" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
+[node name="CharacterBody2D" parent="storm" groups=["storm", "storm left"] instance=ExtResource("7_o6xl0")]
 position = Vector2(-1264, 487.00003)
 scale = Vector2(10.5, 10.5)
 
-[node name="CharacterBody2D2" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
+[node name="CharacterBody2D2" parent="storm" groups=["storm", "storm left"] instance=ExtResource("7_o6xl0")]
 position = Vector2(-1273, 152)
 scale = Vector2(10.5, 10.5)
 
-[node name="CharacterBody2D3" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
+[node name="CharacterBody2D3" parent="storm" groups=["storm", "storm right"] instance=ExtResource("7_o6xl0")]
 position = Vector2(2387, 152.00009)
 rotation = -3.1415925
 scale = Vector2(10.5, 10.5)
 
-[node name="CharacterBody2D4" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
+[node name="CharacterBody2D4" parent="storm" groups=["storm", "storm right"] instance=ExtResource("7_o6xl0")]
 z_index = 1
 position = Vector2(2396, 487.00012)
 rotation = -3.1415925
 scale = Vector2(10.5, 10.5)
+
+[node name="boundaries" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boundaries"]
+position = Vector2(551, -101)
+shape = SubResource("RectangleShape2D_o6xl0")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="boundaries"]
+position = Vector2(548.5, 740)
+shape = SubResource("RectangleShape2D_o6xl0")

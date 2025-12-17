@@ -42,7 +42,9 @@ func spawn_enemy():
 
 func _on_enemy_died():
 	enemies_alive -= 1
-	print(enemies_alive)
+
 	if enemies_alive <= 0:
+		for storm in get_tree().get_nodes_in_group("storm"):
+			storm.reset_storm()
 		await get_tree().create_timer(time_between_waves).timeout
 		start_next_wave()
