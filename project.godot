@@ -27,6 +27,8 @@ enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
 player=""
 "spawn point"=""
+"storm left"=""
+"storm right"=""
 
 [input]
 

@@ -1,9 +1,12 @@
 extends CharacterBody2D
-
+enum DeathType {
+	ENEMY,
+	STORM
+}
 var enemy_inattack_range = false
 var enemy_attack_cooldown = true
 var health = 100
-
+var can_move = false
 
 var attack_ip = false
 
@@ -19,7 +22,10 @@ func _physics_process(delta):
 	enemy_attack()
 	update_health()
 	if health <= 0:
-		health = 0
+		die(DeathType.ENEMY)
+		return
+	if !can_move:
+		return
 	direction = Vector2.ZERO
 	direction.x = Input.get_axis("ui_left","ui_right")
 	direction.y = Input.get_axis("ui_up","ui_down")
@@ -66,14 +72,7 @@ func enemy_attack():
 		enemy_attack_cooldown = false
 		$attack_cooldown.start()
 		if health <= 0:
-				Global.player_died = true
-				velocity = Vector2.ZERO
-				set_process(false)
-				set_physics_process(false)
-				$AnimatedSprite2D.play("death_right")
-				await $AnimatedSprite2D.animation_finished
-				get_tree().reload_current_scene()
-
+			die(DeathType.ENEMY)
 
 func _on_timer_timeout() -> void:
 	enemy_attack_cooldown = true
@@ -109,3 +108,21 @@ func update_health():
 		healthbar.hide()
 	else:
 		healthbar.show()
+func die(death_type: DeathType):
+	if Global.player_died:
+		return
+
+	Global.player_died = true
+	health = 0
+	update_health()
+	velocity = Vector2.ZERO
+
+	set_process(false)
+	set_physics_process(false)
+	match death_type:
+		DeathType.ENEMY:
+			$AnimatedSprite2D.play("slime_death_" + last_dir)
+		DeathType.STORM:
+			$AnimatedSprite2D.play("storm_death_" + last_dir)
+	await $AnimatedSprite2D.animation_finished
+	get_tree().reload_current_scene()

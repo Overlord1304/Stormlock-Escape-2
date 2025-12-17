@@ -13,7 +13,7 @@ var available_spawns: Array = []
 @onready var spawn_points := get_tree().get_nodes_in_group("spawn point")
 
 func _ready():
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(3).timeout
 	start_next_wave()
 
 func start_next_wave():
@@ -42,7 +42,7 @@ func spawn_enemy():
 
 func _on_enemy_died():
 	enemies_alive -= 1
-
+	print(enemies_alive)
 	if enemies_alive <= 0:
 		await get_tree().create_timer(time_between_waves).timeout
 		start_next_wave()
