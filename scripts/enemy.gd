@@ -1,6 +1,7 @@
 extends CharacterBody2D
-var storm_push = Vector2.ZERO
-var storm_push_strength = 100
+@onready var nav_agent = $NavigationAgent2D
+var storm = null
+var storm_avoid_distance = 120
 var speed = 60
 var player_chase = false
 var player = null
@@ -9,35 +10,39 @@ var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
 signal died
-func _physics_process(delta) -> void:
-
+func _physics_process(delta):
 	update_health()
 	deal_with_damage()
+
 	if is_dead:
 		return
-	if player_chase and player:
-		var to_player = player.position - position
-		var distance = to_player.length()
 
-		
-		var slow_factor = clamp(distance / 80.0, 0.3, 1.0)
-		var direction = to_player.normalized()
+	var target_position = null
 
-		move_and_collide(direction * speed * slow_factor * delta)
+	# PRIORITY 1: RUN AWAY FROM STORM
+	if storm:
+		var away_dir = (global_position - storm.global_position).normalized()
+		target_position = global_position + away_dir * 200
+
+	# PRIORITY 2: CHASE PLAYER
+	elif player_chase and player:
+		target_position = player.global_position
+
+	if target_position:
+		nav_agent.target_position = target_position
+
+		var next_point = nav_agent.get_next_path_position()
+		var direction = (next_point - global_position).normalized()
+
+		velocity = direction * speed
+		move_and_slide()
 
 		$AnimatedSprite2D.play("move")
 		$AnimatedSprite2D.flip_h = direction.x < 0
-		if $AnimatedSprite2D.flip_h == true:
-			$hitbox/left.disabled = false
-			$hitbox/right.disabled = true
-		else:
-			$hitbox/left.disabled = true
-			$hitbox/right.disabled = false
 	else:
+		velocity = Vector2.ZERO
+		move_and_slide()
 		$AnimatedSprite2D.play("idle")
-	velocity += storm_push
-	storm_push = Vector2.ZERO
-	move_and_slide()
 
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):
@@ -100,3 +105,13 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		Global.score += 20
 		died.emit()
 		queue_free()
+
+
+func _on_storm_detector_body_entered(body: Node2D) -> void:
+	if body.is_in_group("storm"):
+		storm = body
+
+
+func _on_storm_detector_body_exited(body: Node2D) -> void:
+	if body == storm:
+		storm = null

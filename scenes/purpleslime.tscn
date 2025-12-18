@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c2rfsvpt32ies"]
+[gd_scene load_steps=28 format=3 uid="uid://c2rfsvpt32ies"]
 
 [ext_resource type="Texture2D" uid="uid://378iha5emwdf" path="res://sprites/slimidle.png" id="1_by1ao"]
 [ext_resource type="Script" uid="uid://pj5bvhggucv3" path="res://scripts/enemy.gd" id="1_ck05h"]
@@ -151,8 +151,10 @@ size = Vector2(29, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ludtu"]
 size = Vector2(26, 20)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hojqu"]
-size = Vector2(20, 17)
+[sub_resource type="CircleShape2D" id="CircleShape2D_axwnf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hojqu"]
+radius = 108.24047
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 5
@@ -193,7 +195,19 @@ show_percentage = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1.5)
-shape = SubResource("RectangleShape2D_hojqu")
+shape = SubResource("CircleShape2D_axwnf")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 4.0
+target_desired_distance = 8.0
+avoidance_enabled = true
+
+[node name="storm_detector" type="Area2D" parent="."]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="storm_detector"]
+shape = SubResource("CircleShape2D_hojqu")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="detrection zone" to="." method="_on_area_2d_body_entered"]
@@ -201,3 +215,5 @@ shape = SubResource("RectangleShape2D_hojqu")
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="timeout" from="take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
+[connection signal="body_entered" from="storm_detector" to="." method="_on_storm_detector_body_entered"]
+[connection signal="body_exited" from="storm_detector" to="." method="_on_storm_detector_body_exited"]
