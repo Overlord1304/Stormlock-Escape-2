@@ -2,15 +2,19 @@ extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
 var storm = null
 var storm_avoid_distance = 120
-var speed = 60
+var speed = 40
 var player_chase = false
 var player = null
-var health = 80
+var health = 300
 var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
-
-
+var is_charging = false
+var charge_speed = 200
+var charge_time = 0.5
+var charge_cooldown = 3.0
+var charge_timer = 0.0
+var charge_direction = Vector2.ZERO
 signal died
 func _physics_process(delta):
 	update_health()
@@ -18,13 +22,23 @@ func _physics_process(delta):
 
 	if is_dead:
 		return
-
+	if not is_charging:
+		charge_timer -= delta
+		if charge_timer <= 0:
+			start_charge()
+	else:
+		charge_timer -= delta
+		if charge_timer <= 0:
+			end_charge()
+		else:
+			velocity = charge_direction * charge_speed
+			move_and_slide()
+			$AnimatedSprite2D.play("move")
+			$AnimatedSprite2D.flip_h = velocity.x < 0
+			return
 	var desired_velocity := Vector2.ZERO
-	if storm:
-		var away_dir = (global_position - storm.global_position).normalized()
-		nav_agent.target_position = global_position + away_dir * 500
 
-	elif player_chase and player:
+	if player_chase and player:
 		nav_agent.target_position = player.global_position
 
 
@@ -57,6 +71,18 @@ func _physics_process(delta):
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	else:
 		$AnimatedSprite2D.play("idle")
+func start_charge():
+	if not player:
+
+		charge_direction = Vector2(randf() * 2 - 1, randf() * 2 - 1).normalized()
+	else:
+
+		charge_direction = (player.global_position - global_position).normalized()
+	is_charging = true
+	charge_timer = charge_time
+func end_charge():
+	is_charging = false
+	charge_timer = charge_cooldown
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):
 		player = body
@@ -98,7 +124,7 @@ func _on_take_damage_cooldown_timeout() -> void:
 func update_health():
 	var healthbar = $healthbar
 	healthbar.value = health
-	if health >= 80:
+	if health >= 300:
 		healthbar.hide()
 	else:
 		healthbar.show()

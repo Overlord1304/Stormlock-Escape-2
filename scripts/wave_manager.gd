@@ -2,11 +2,12 @@ extends Node
 
 @export var enemy_scene: PackedScene
 @export var food_scene: PackedScene
-@export var enemies_per_wave := 5
+@export var boss_scene: PackedScene
+@export var enemies_per_wave := 2
 @export var time_between_waves := 3.0
 @export var food_per_wave = 3
 var current_wave := 0
-var enemies_alive := 0
+var enemies_alive
 
 var available_spawns: Array = []
 var spawned_food: Array = []
@@ -20,16 +21,16 @@ func _ready():
 func start_next_wave():
 	current_wave += 1
 	wave_label.text = "Wave " + str(current_wave)
-
-	enemies_alive = enemies_per_wave + current_wave * 2
-
-	
+	enemies_alive = enemies_per_wave
 	available_spawns = spawn_points.duplicate()
 	spawn_food()
-	for i in enemies_alive:
-		if available_spawns.is_empty():
-			break 
-		spawn_enemy()
+	if current_wave % 1 == 0:
+		spawn_boss()
+	else:
+		for i in enemies_alive:
+			if available_spawns.is_empty():
+				break 
+			spawn_enemy()
 func spawn_food():
 	for i in food_per_wave:
 		if available_spawns.is_empty():
@@ -50,7 +51,15 @@ func spawn_enemy():
 	get_parent().add_child(enemy)
 
 	enemy.died.connect(_on_enemy_died)
-
+func spawn_boss():
+	if available_spawns.is_empty():
+		return
+	var spawn = available_spawns.pick_random()
+	available_spawns.erase(spawn)
+	var boss = boss_scene.instantiate()
+	boss.global_position = spawn.global_position
+	get_parent().add_child(boss)
+	boss.died.connect(_on_enemy_died)
 func _on_enemy_died():
 	enemies_alive -= 1
 

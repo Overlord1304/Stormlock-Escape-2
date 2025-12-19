@@ -45,7 +45,7 @@ func start_countdown():
 		await get_tree().create_timer(1.0).timeout
 	
 	countdown_label.text = "Go!"
-	await get_tree().create_timer(1.0).timeout
+	
 	countdown_label.hide()
 
 	player.can_move = true
