@@ -1,14 +1,15 @@
 extends Node
 
 @export var enemy_scene: PackedScene
+@export var food_scene: PackedScene
 @export var enemies_per_wave := 5
 @export var time_between_waves := 3.0
-
+@export var food_per_wave = 3
 var current_wave := 0
 var enemies_alive := 0
 
 var available_spawns: Array = []
-
+var spawned_food: Array = []
 @onready var wave_label := get_parent().get_node("ui/WaveLabel")
 @onready var spawn_points := get_tree().get_nodes_in_group("spawn point")
 
@@ -24,11 +25,21 @@ func start_next_wave():
 
 	
 	available_spawns = spawn_points.duplicate()
-
+	spawn_food()
 	for i in enemies_alive:
 		if available_spawns.is_empty():
 			break 
 		spawn_enemy()
+func spawn_food():
+	for i in food_per_wave:
+		if available_spawns.is_empty():
+			break
+		var spawn = available_spawns.pick_random()
+		available_spawns.erase(spawn)
+		var food = food_scene.instantiate()
+		food.global_position = spawn.global_position
+		get_parent().add_child(food)
+		spawned_food.append((food))
 
 func spawn_enemy():
 	var spawn = available_spawns.pick_random()
@@ -44,7 +55,14 @@ func _on_enemy_died():
 	enemies_alive -= 1
 
 	if enemies_alive <= 0:
+		despawn_food()
 		for storm in get_tree().get_nodes_in_group("storm"):
 			storm.reset_storm()
 		await get_tree().create_timer(time_between_waves).timeout
 		start_next_wave()
+
+func despawn_food():
+	for food in spawned_food:
+		if is_instance_valid(food):
+			food.queue_free()
+	spawned_food.clear()

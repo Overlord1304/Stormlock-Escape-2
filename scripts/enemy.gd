@@ -17,33 +17,44 @@ func _physics_process(delta):
 	if is_dead:
 		return
 
-	var target_position = null
-
-	# PRIORITY 1: RUN AWAY FROM STORM
+	var desired_velocity := Vector2.ZERO
 	if storm:
 		var away_dir = (global_position - storm.global_position).normalized()
-		target_position = global_position + away_dir * 200
+		nav_agent.target_position = global_position + away_dir * 500
 
-	# PRIORITY 2: CHASE PLAYER
 	elif player_chase and player:
-		target_position = player.global_position
+		nav_agent.target_position = player.global_position
 
-	if target_position:
-		nav_agent.target_position = target_position
 
+	if not nav_agent.is_navigation_finished():
 		var next_point = nav_agent.get_next_path_position()
 		var direction = (next_point - global_position).normalized()
+		var final_speed = speed
 
-		velocity = direction * speed
-		move_and_slide()
+		if player_chase and player:
+			var dist = global_position.distance_to(player.global_position)
 
+	
+			var slow_radius := 48.0
+
+			if dist < slow_radius:
+				var t = dist / slow_radius
+				final_speed = speed * lerp(0.8, 1.0, t)
+
+		desired_velocity = direction * final_speed
+
+	
+	var acceleration := 800.0
+	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
+
+	move_and_slide()
+
+	# ---- Animations ----
+	if velocity.length() > 5:
 		$AnimatedSprite2D.play("move")
-		$AnimatedSprite2D.flip_h = direction.x < 0
+		$AnimatedSprite2D.flip_h = velocity.x < 0
 	else:
-		velocity = Vector2.ZERO
-		move_and_slide()
 		$AnimatedSprite2D.play("idle")
-
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):
 		player = body
@@ -106,12 +117,15 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		died.emit()
 		queue_free()
 
+func _on_storm_detector_area_entered(area: Area2D) -> void:
+	
+	if area.is_in_group("storm"):
+		
+		storm = area
 
-func _on_storm_detector_body_entered(body: Node2D) -> void:
-	if body.is_in_group("storm"):
-		storm = body
 
+func _on_storm_detector_area_exited(area: Area2D) -> void:
 
-func _on_storm_detector_body_exited(body: Node2D) -> void:
-	if body == storm:
+	if area == storm:
+		
 		storm = null

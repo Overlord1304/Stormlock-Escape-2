@@ -106,6 +106,7 @@ func update_health():
 	
 	if health >= 100:
 		healthbar.hide()
+		health = 100
 	else:
 		healthbar.show()
 func die(death_type: DeathType):
@@ -126,3 +127,8 @@ func die(death_type: DeathType):
 			$AnimatedSprite2D.play("storm_death_" + last_dir)
 	await $AnimatedSprite2D.animation_finished
 	get_tree().reload_current_scene()
+
+
+func on_food_collected() -> void:
+	health += 50
+	update_health()

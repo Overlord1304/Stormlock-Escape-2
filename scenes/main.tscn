@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://egov8gpmx4rd"]
+[gd_scene load_steps=16 format=4 uid="uid://egov8gpmx4rd"]
 
 [ext_resource type="PackedScene" uid="uid://bl1q7wod3c3q3" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://xydgxot5au6r" path="res://scripts/game.gd" id="1_tefeu"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ehxsgvn1u7u0" path="res://scripts/wave_manager.gd" id="4_tbgi4"]
 [ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://j3ty7qfi884i" path="res://scenes/storm.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://conhi1a8il2xk" path="res://scenes/food.tscn" id="8_tipki"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
 texture = ExtResource("3_sugp2")
@@ -189,7 +190,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(9, -11, 718, -11, 1098,
 script = ExtResource("1_tefeu")
 
 [node name="player" parent="." instance=ExtResource("1_o5qli")]
-position = Vector2(455, 269)
+position = Vector2(476, 266)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -1
@@ -597,6 +598,7 @@ scale = Vector2(10, 10)
 [node name="WaveManager" type="Node2D" parent="."]
 script = ExtResource("4_tbgi4")
 enemy_scene = ExtResource("4_jyhfs")
+food_scene = ExtResource("8_tipki")
 
 [node name="ui" type="CanvasLayer" parent="."]
 
@@ -648,20 +650,20 @@ theme_override_font_sizes/font_size = 25
 
 [node name="storm" type="Node2D" parent="."]
 
-[node name="CharacterBody2D" parent="storm" groups=["storm", "storm left"] instance=ExtResource("7_o6xl0")]
+[node name="CharacterBody2D" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
 position = Vector2(-1264, 487.00003)
 scale = Vector2(10.5, 10.5)
 
-[node name="CharacterBody2D2" parent="storm" groups=["storm", "storm left"] instance=ExtResource("7_o6xl0")]
+[node name="CharacterBody2D2" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
 position = Vector2(-1273, 152)
 scale = Vector2(10.5, 10.5)
 
-[node name="CharacterBody2D3" parent="storm" groups=["storm", "storm right"] instance=ExtResource("7_o6xl0")]
+[node name="CharacterBody2D3" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
 position = Vector2(2387, 152.00009)
 rotation = -3.1415925
 scale = Vector2(10.5, 10.5)
 
-[node name="CharacterBody2D4" parent="storm" groups=["storm", "storm right"] instance=ExtResource("7_o6xl0")]
+[node name="CharacterBody2D4" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
 z_index = 1
 position = Vector2(2396, 487.00012)
 rotation = -3.1415925

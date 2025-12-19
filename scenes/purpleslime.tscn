@@ -143,7 +143,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ludtu"]
-radius = 134.85178
+radius = 76.05919
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ck05h"]
 size = Vector2(29, 20)
@@ -154,11 +154,11 @@ size = Vector2(26, 20)
 [sub_resource type="CircleShape2D" id="CircleShape2D_axwnf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hojqu"]
-radius = 108.24047
+radius = 94.00532
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["enemy"]]
-collision_layer = 5
-collision_mask = 5
+collision_layer = 6
+collision_mask = 6
 script = ExtResource("1_ck05h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -215,5 +215,7 @@ shape = SubResource("CircleShape2D_hojqu")
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="timeout" from="take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
+[connection signal="area_entered" from="storm_detector" to="." method="_on_storm_detector_area_entered"]
+[connection signal="area_exited" from="storm_detector" to="." method="_on_storm_detector_area_exited"]
 [connection signal="body_entered" from="storm_detector" to="." method="_on_storm_detector_body_entered"]
 [connection signal="body_exited" from="storm_detector" to="." method="_on_storm_detector_body_exited"]
