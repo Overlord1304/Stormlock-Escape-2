@@ -2,7 +2,8 @@ extends Node
 
 @export var enemy_scenes = [
 	{"ps": preload("res://scenes/purpleslime.tscn")},
-	{"pss": preload("res://scenes/purpleslimesmall.tscn")}
+	{"pss": preload("res://scenes/purpleslimesmall.tscn")},
+	{"crab": preload("res://scenes/crab.tscn")}
 ]
 @export var food_scene: PackedScene
 @export var boss_scene: PackedScene
@@ -22,10 +23,13 @@ func _ready():
 	start_next_wave()
 func get_random_enemy():
 	var rand = randi() % 100
-	if rand < 60:
-		return enemy_scenes[0]["ps"]
-	else:
-		return enemy_scenes[1]["pss"]
+	if current_wave < 5:
+		if rand < 60:
+			return enemy_scenes[0]["ps"]
+		else:
+			return enemy_scenes[1]["pss"]
+	elif current_wave > 5:
+		return enemy_scenes[2]["crab"]
 func start_next_wave():
 	current_wave += 1
 	wave_label.text = "Wave " + str(current_wave)

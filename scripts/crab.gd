@@ -2,14 +2,14 @@ extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
 var storm = null
 var storm_avoid_distance = 120
-var speed = 90
+var speed = 60
 var player_chase = false
 var player = null
-var health = 50
+var health = 80
 var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
-
+var is_attacking = false
 
 signal died
 func _physics_process(delta):
@@ -19,44 +19,45 @@ func _physics_process(delta):
 	if is_dead:
 		return
 
-	var desired_velocity := Vector2.ZERO
-	if storm:
-		var away_dir = (global_position - storm.global_position).normalized()
-		nav_agent.target_position = global_position + away_dir * 500
-
-	elif player_chase and player:
-		nav_agent.target_position = player.global_position
-
-
-	if not nav_agent.is_navigation_finished():
-		var next_point = nav_agent.get_next_path_position()
-		var direction = (next_point - global_position).normalized()
-		var final_speed = speed
-
-		if player_chase and player:
-			var dist = global_position.distance_to(player.global_position)
-
-	
-			var slow_radius := 48.0
-
-			if dist < slow_radius:
-				var t = dist / slow_radius
-				final_speed = speed * lerp(0.8, 1.0, t)
-
-		desired_velocity = direction * final_speed
-
-	
-	var acceleration := 800.0
-	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
-
-	move_and_slide()
-
-	
-	if velocity.length() > 5:
-		$AnimatedSprite2D.play("move")
-		$AnimatedSprite2D.flip_h = velocity.x < 0
 	else:
-		$AnimatedSprite2D.play("idle")
+		var desired_velocity := Vector2.ZERO
+		if storm:
+			var away_dir = (global_position - storm.global_position).normalized()
+			nav_agent.target_position = global_position + away_dir * 500
+
+		elif player_chase and player:
+			nav_agent.target_position = player.global_position
+
+
+		if not nav_agent.is_navigation_finished():
+			var next_point = nav_agent.get_next_path_position()
+			var direction = (next_point - global_position).normalized()
+			var final_speed = speed
+
+			if player_chase and player:
+				var dist = global_position.distance_to(player.global_position)
+
+		
+				var slow_radius := 48.0
+
+				if dist < slow_radius:
+					var t = dist / slow_radius
+					final_speed = speed * lerp(0.8, 1.0, t)
+
+			desired_velocity = direction * final_speed
+
+		
+		var acceleration := 800.0
+		velocity = velocity.move_toward(desired_velocity, acceleration * delta)
+
+		move_and_slide()
+
+		if not is_attacking:
+			if velocity.length() > 5:
+				$AnimatedSprite2D.play("move")
+				$AnimatedSprite2D.flip_h = velocity.x < 0
+			else:
+				$AnimatedSprite2D.play("idle")
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):
 		player = body
@@ -98,7 +99,7 @@ func _on_take_damage_cooldown_timeout() -> void:
 func update_health():
 	var healthbar = $healthbar
 	healthbar.value = health
-	if health >= 50:
+	if health >= 80:
 		healthbar.hide()
 	else:
 		healthbar.show()
@@ -114,6 +115,9 @@ func die():
 	
 
 func _on_animated_sprite_2d_animation_finished() -> void:
+	if is_attacking and $AnimatedSprite2D.animation == "attack":
+		is_attacking = false
+
 	if is_dead and $AnimatedSprite2D.animation == "death":
 		Global.score += 20
 		died.emit()
@@ -131,3 +135,8 @@ func _on_storm_detector_area_exited(area: Area2D) -> void:
 	if area == storm:
 		
 		storm = null
+func play_attack() -> void:
+	if is_attacking:
+		return
+	is_attacking = true
+	$AnimatedSprite2D.play("attack")

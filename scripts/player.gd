@@ -1,14 +1,16 @@
 extends CharacterBody2D
 enum DeathType {
+	SLIME,
 	ENEMY,
 	STORM
 }
 var enemy_inattack_range = false
 var psb_inattack_range = false
+var crab_inattack_range = false
 var enemy_attack_cooldown = true
 var health = 100
 var can_move = false
-
+var crab = null
 var attack_ip = false
 
 @export var speed = 100
@@ -23,9 +25,13 @@ func _physics_process(delta):
 	enemy_attack()
 	psb_attack()
 	update_health()
-	
+	if crab_inattack_range:
+		crab.play_attack()
 	if health <= 0:
-		die(DeathType.ENEMY)
+		if crab_inattack_range:
+			die(DeathType.ENEMY)
+		else:
+			die(DeathType.SLIME)
 		return
 	if !can_move:
 		return
@@ -64,13 +70,21 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		if body.has_method("start_charge"):
 			psb_inattack_range = true
 		else:
+			if body.is_in_group("crab"):
+				crab_inattack_range = true
+				crab = body
 			enemy_inattack_range = true
+
+
 
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	if body.has_method("enemy"):
 		if body.has_method("start_charge"):
 			psb_inattack_range = false
 		else:
+			if body.is_in_group("crab"):
+				crab_inattack_range = false
+				crab = null
 			enemy_inattack_range = false
 func enemy_attack():
 	if enemy_inattack_range and enemy_attack_cooldown == true:
@@ -78,7 +92,10 @@ func enemy_attack():
 		enemy_attack_cooldown = false
 		$attack_cooldown.start()
 		if health <= 0:
-			die(DeathType.ENEMY)
+			if crab_inattack_range:
+				die(DeathType.ENEMY)
+			else:
+				die(DeathType.SLIME)
 func psb_attack():
 	if psb_inattack_range and enemy_attack_cooldown == true:
 		health = health - 20
@@ -134,8 +151,10 @@ func die(death_type: DeathType):
 	set_process(false)
 	set_physics_process(false)
 	match death_type:
-		DeathType.ENEMY:
+		DeathType.SLIME:
 			$AnimatedSprite2D.play("slime_death_" + last_dir)
+		DeathType.ENEMY:
+			$AnimatedSprite2D.play("enemy_death_" + last_dir)
 		DeathType.STORM:
 			$AnimatedSprite2D.play("storm_death_" + last_dir)
 	await $AnimatedSprite2D.animation_finished
