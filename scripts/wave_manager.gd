@@ -1,9 +1,12 @@
 extends Node
 
-@export var enemy_scene: PackedScene
+@export var enemy_scenes = [
+	{"ps": preload("res://scenes/purpleslime.tscn")},
+	{"pss": preload("res://scenes/purpleslimesmall.tscn")}
+]
 @export var food_scene: PackedScene
 @export var boss_scene: PackedScene
-@export var enemies_per_wave := 2
+@export var enemies_per_wave := 7
 @export var time_between_waves := 3.0
 @export var food_per_wave = 3
 var current_wave := 0
@@ -17,14 +20,19 @@ var spawned_food: Array = []
 func _ready():
 	await get_tree().create_timer(3).timeout
 	start_next_wave()
-
+func get_random_enemy():
+	var rand = randi() % 100
+	if rand < 60:
+		return enemy_scenes[0]["ps"]
+	else:
+		return enemy_scenes[1]["pss"]
 func start_next_wave():
 	current_wave += 1
 	wave_label.text = "Wave " + str(current_wave)
 	enemies_alive = enemies_per_wave
 	available_spawns = spawn_points.duplicate()
 	spawn_food()
-	if current_wave % 1 == 0:
+	if current_wave % 5 == 0:
 		spawn_boss()
 	else:
 		for i in enemies_alive:
@@ -43,10 +51,12 @@ func spawn_food():
 		spawned_food.append((food))
 
 func spawn_enemy():
+	if available_spawns.is_empty():
+		return
 	var spawn = available_spawns.pick_random()
 	available_spawns.erase(spawn)
 
-	var enemy = enemy_scene.instantiate()
+	var enemy = get_random_enemy().instantiate()
 	enemy.global_position = spawn.global_position
 	get_parent().add_child(enemy)
 
@@ -59,7 +69,7 @@ func spawn_boss():
 	var boss = boss_scene.instantiate()
 	boss.global_position = spawn.global_position
 	get_parent().add_child(boss)
-	boss.died.connect(_on_enemy_died)
+	boss.died.connect(_on_boss_died)
 func _on_enemy_died():
 	enemies_alive -= 1
 
@@ -75,3 +85,9 @@ func despawn_food():
 		if is_instance_valid(food):
 			food.queue_free()
 	spawned_food.clear()
+func _on_boss_died():
+	despawn_food()
+	for storm in get_tree().get_nodes_in_group("storm"):
+		storm.reset_storm()
+	await get_tree().create_timer(time_between_waves).timeout
+	start_next_wave()

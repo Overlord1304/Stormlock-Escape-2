@@ -4,6 +4,7 @@ enum DeathType {
 	STORM
 }
 var enemy_inattack_range = false
+var psb_inattack_range = false
 var enemy_attack_cooldown = true
 var health = 100
 var can_move = false
@@ -20,7 +21,9 @@ var last_dir = "down"
 func _physics_process(delta):
 	attack()
 	enemy_attack()
+	psb_attack()
 	update_health()
+	
 	if health <= 0:
 		die(DeathType.ENEMY)
 		return
@@ -58,14 +61,17 @@ func player():
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("enemy"):
-		enemy_inattack_range = true
-		
-
+		if body.has_method("start_charge"):
+			psb_inattack_range = true
+		else:
+			enemy_inattack_range = true
 
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	if body.has_method("enemy"):
-		enemy_inattack_range = false
-		
+		if body.has_method("start_charge"):
+			psb_inattack_range = false
+		else:
+			enemy_inattack_range = false
 func enemy_attack():
 	if enemy_inattack_range and enemy_attack_cooldown == true:
 		health = health - 10
@@ -73,8 +79,15 @@ func enemy_attack():
 		$attack_cooldown.start()
 		if health <= 0:
 			die(DeathType.ENEMY)
-
+func psb_attack():
+	if psb_inattack_range and enemy_attack_cooldown == true:
+		health = health - 20
+		enemy_attack_cooldown = false
+		$attack_cooldown.start()
+		if health <= 0:
+			die(DeathType.ENEMY)
 func _on_timer_timeout() -> void:
+	
 	enemy_attack_cooldown = true
 
 func attack():
