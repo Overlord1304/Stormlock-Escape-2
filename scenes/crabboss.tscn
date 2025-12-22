@@ -200,7 +200,7 @@ offset_top = 6.9999995
 offset_right = 189.99998
 offset_bottom = 47.0
 scale = Vector2(0.1, 0.1)
-max_value = 340.0
+max_value = 300.0
 show_percentage = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

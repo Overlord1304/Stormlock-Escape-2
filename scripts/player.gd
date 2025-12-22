@@ -7,10 +7,12 @@ enum DeathType {
 var enemy_inattack_range = false
 var psb_inattack_range = false
 var crab_inattack_range = false
+var mech_inattack_range = false
 var enemy_attack_cooldown = true
 var health = 100
 var can_move = false
 var crab = null
+var mech = null
 var attack_ip = false
 
 @onready var speed = 100
@@ -73,6 +75,10 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 			if body.is_in_group("crab"):
 				crab_inattack_range = true
 				crab = body
+			elif body.is_in_group("mech"):
+				mech_inattack_range = true
+				mech = body
+				
 			enemy_inattack_range = true
 
 
@@ -85,6 +91,10 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 			if body.is_in_group("crab"):
 				crab_inattack_range = false
 				crab = null
+			elif body.is_in_group("mech"):
+				mech_inattack_range = false
+				mech = null
+				
 			enemy_inattack_range = false
 func enemy_attack():
 	if enemy_inattack_range and enemy_attack_cooldown == true:
@@ -92,7 +102,7 @@ func enemy_attack():
 		enemy_attack_cooldown = false
 		$attack_cooldown.start()
 		if health <= 0:
-			if crab_inattack_range:
+			if crab_inattack_range or mech_inattack_range:
 				die(DeathType.ENEMY)
 			else:
 				die(DeathType.SLIME)
@@ -103,6 +113,12 @@ func psb_attack():
 		$attack_cooldown.start()
 		if health <= 0:
 			die(DeathType.ENEMY)
+func take_laser_damage(amount):
+	health -= amount
+	update_health()
+
+	if health <= 0:
+		die(DeathType.ENEMY)
 func _on_timer_timeout() -> void:
 	
 	enemy_attack_cooldown = true

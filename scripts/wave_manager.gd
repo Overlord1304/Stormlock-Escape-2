@@ -4,14 +4,15 @@ extends Node
 	{"ps": preload("res://scenes/purpleslime.tscn")},
 	{"pss": preload("res://scenes/purpleslimesmall.tscn")},
 	{"c": preload("res://scenes/crab.tscn")},
-	{"cs": preload("res://scenes/crabsmall.tscn")}
+	{"cs": preload("res://scenes/crabsmall.tscn")},
+	{"m": preload("res://scenes/mech.tscn")}
 ]
 @export var food_scene: PackedScene
 @export var boss_scenes = [
 	{"psb": preload("res://scenes/purpleslimeboss.tscn")},
 	{"cb": preload("res://scenes/crabboss.tscn")}
 ]
-@export var enemies_per_wave := 7
+@export var enemies_per_wave := 1
 @export var time_between_waves := 3.0
 @export var food_per_wave = 3
 var current_wave := 0
@@ -28,8 +29,8 @@ func _ready():
 func get_random_enemy():
 	var rand = randi() % 100
 	if current_wave < 5:
-		if rand < 60:
-			return enemy_scenes[0]["ps"]
+		if rand < 90:
+			return enemy_scenes[4]["m"]
 		else:
 			return enemy_scenes[1]["pss"]
 	elif current_wave > 5:

@@ -32,6 +32,7 @@ player=""
 enemy=""
 storm=""
 crab=""
+mech=""
 
 [input]
 
