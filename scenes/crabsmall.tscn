@@ -1,87 +1,87 @@
-[gd_scene load_steps=38 format=3 uid="uid://c0o6af42gg8nf"]
+[gd_scene load_steps=38 format=3 uid="uid://bmpo0etmosy88"]
 
-[ext_resource type="Script" uid="uid://blmcuvjlkh6lo" path="res://scripts/crab.gd" id="1_ixvkc"]
-[ext_resource type="Texture2D" uid="uid://c0rvsf6h1m8ny" path="res://sprites/Crab_Attack1.png" id="2_ixvkc"]
-[ext_resource type="Texture2D" uid="uid://cj7c2yinewop0" path="res://sprites/Crab_Attack2.png" id="3_pkxn6"]
-[ext_resource type="Texture2D" uid="uid://bjrg51b6jdw0g" path="res://sprites/Crab_Attack3.png" id="4_cupma"]
-[ext_resource type="Texture2D" uid="uid://bm8ix3b5v6ssn" path="res://sprites/Crab_Attack4.png" id="5_aupet"]
-[ext_resource type="Texture2D" uid="uid://cg1ed7mfii4n7" path="res://sprites/crab death.png" id="6_1uom6"]
-[ext_resource type="Texture2D" uid="uid://ki5dr80e7mqt" path="res://sprites/Crab1.png" id="7_yk2cj"]
-[ext_resource type="Texture2D" uid="uid://b6d6ues4ahsay" path="res://sprites/Crab2.png" id="8_q4iun"]
-[ext_resource type="Texture2D" uid="uid://cridte6rrnnba" path="res://sprites/Crab3.png" id="9_kykk4"]
-[ext_resource type="Texture2D" uid="uid://bxhcoe5ycg62i" path="res://sprites/Crab4.png" id="10_ve55g"]
-[ext_resource type="Texture2D" uid="uid://bc67vpef7q0d7" path="res://sprites/Crab5.png" id="11_dbjn5"]
-[ext_resource type="Texture2D" uid="uid://df4txjcbad4px" path="res://sprites/CrabMoving1.png" id="12_vmwht"]
-[ext_resource type="Texture2D" uid="uid://cg550lb67qu0x" path="res://sprites/CrabMoving2.png" id="13_222ti"]
-[ext_resource type="Texture2D" uid="uid://bisl5d6m3w8nt" path="res://sprites/CrabMoving3.png" id="14_3v7di"]
-[ext_resource type="Texture2D" uid="uid://cjpb4i4nnivpm" path="res://sprites/CrabMoving4.png" id="15_qko2b"]
+[ext_resource type="Script" uid="uid://bunebug3e454y" path="res://scripts/cs.gd" id="1_hillg"]
+[ext_resource type="Texture2D" uid="uid://c0rvsf6h1m8ny" path="res://sprites/Crab_Attack1.png" id="2_bwr3u"]
+[ext_resource type="Texture2D" uid="uid://cj7c2yinewop0" path="res://sprites/Crab_Attack2.png" id="3_snpyw"]
+[ext_resource type="Texture2D" uid="uid://bjrg51b6jdw0g" path="res://sprites/Crab_Attack3.png" id="4_chywl"]
+[ext_resource type="Texture2D" uid="uid://bm8ix3b5v6ssn" path="res://sprites/Crab_Attack4.png" id="5_d1xut"]
+[ext_resource type="Texture2D" uid="uid://cg1ed7mfii4n7" path="res://sprites/crab death.png" id="6_ey3x1"]
+[ext_resource type="Texture2D" uid="uid://ki5dr80e7mqt" path="res://sprites/Crab1.png" id="7_xvrdq"]
+[ext_resource type="Texture2D" uid="uid://b6d6ues4ahsay" path="res://sprites/Crab2.png" id="8_n0bkq"]
+[ext_resource type="Texture2D" uid="uid://cridte6rrnnba" path="res://sprites/Crab3.png" id="9_g8ucb"]
+[ext_resource type="Texture2D" uid="uid://bxhcoe5ycg62i" path="res://sprites/Crab4.png" id="10_vuo8m"]
+[ext_resource type="Texture2D" uid="uid://bc67vpef7q0d7" path="res://sprites/Crab5.png" id="11_rn11w"]
+[ext_resource type="Texture2D" uid="uid://df4txjcbad4px" path="res://sprites/CrabMoving1.png" id="12_5un3k"]
+[ext_resource type="Texture2D" uid="uid://cg550lb67qu0x" path="res://sprites/CrabMoving2.png" id="13_o54ju"]
+[ext_resource type="Texture2D" uid="uid://bisl5d6m3w8nt" path="res://sprites/CrabMoving3.png" id="14_u67tj"]
+[ext_resource type="Texture2D" uid="uid://cjpb4i4nnivpm" path="res://sprites/CrabMoving4.png" id="15_s0hy1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1vinl"]
-atlas = ExtResource("2_ixvkc")
+atlas = ExtResource("2_bwr3u")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a0g53"]
-atlas = ExtResource("3_pkxn6")
+atlas = ExtResource("3_snpyw")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cxbpn"]
-atlas = ExtResource("4_cupma")
+atlas = ExtResource("4_chywl")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bidcb"]
-atlas = ExtResource("5_aupet")
+atlas = ExtResource("5_d1xut")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k8i3s"]
-atlas = ExtResource("6_1uom6")
+atlas = ExtResource("6_ey3x1")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p0x5f"]
-atlas = ExtResource("6_1uom6")
+atlas = ExtResource("6_ey3x1")
 region = Rect2(18, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_npr51"]
-atlas = ExtResource("6_1uom6")
+atlas = ExtResource("6_ey3x1")
 region = Rect2(36, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8qqbm"]
-atlas = ExtResource("6_1uom6")
+atlas = ExtResource("6_ey3x1")
 region = Rect2(54, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_one7c"]
-atlas = ExtResource("7_yk2cj")
+atlas = ExtResource("7_xvrdq")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jho4f"]
-atlas = ExtResource("8_q4iun")
+atlas = ExtResource("8_n0bkq")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rjums"]
-atlas = ExtResource("9_kykk4")
+atlas = ExtResource("9_g8ucb")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g1c6m"]
-atlas = ExtResource("10_ve55g")
+atlas = ExtResource("10_vuo8m")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v5esw"]
-atlas = ExtResource("11_dbjn5")
+atlas = ExtResource("11_rn11w")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wabh5"]
-atlas = ExtResource("12_vmwht")
+atlas = ExtResource("12_5un3k")
 region = Rect2(0, 0, 20, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c1402"]
-atlas = ExtResource("13_222ti")
+atlas = ExtResource("13_o54ju")
 region = Rect2(0, 0, 20, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ooxbh"]
-atlas = ExtResource("14_3v7di")
+atlas = ExtResource("14_u67tj")
 region = Rect2(0, 0, 20, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wp6kn"]
-atlas = ExtResource("15_qko2b")
+atlas = ExtResource("15_s0hy1")
 region = Rect2(0, 0, 20, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a5p5h"]
@@ -162,7 +162,7 @@ animations = [{
 radius = 76.05919
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ludtu"]
-size = Vector2(26, 21)
+size = Vector2(26, 24.666668)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_axwnf"]
 
@@ -170,9 +170,10 @@ size = Vector2(26, 21)
 radius = 94.00532
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["crab", "enemy"]]
+scale = Vector2(0.5, 0.5)
 collision_layer = 6
 collision_mask = 6
-script = ExtResource("1_ixvkc")
+script = ExtResource("1_hillg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -1)
@@ -189,7 +190,7 @@ shape = SubResource("CircleShape2D_ludtu")
 [node name="hitbox" type="Area2D" parent="."]
 
 [node name="hitbox" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(0, 0.5)
+position = Vector2(1.6391277e-07, -1.6666665)
 shape = SubResource("RectangleShape2D_ludtu")
 
 [node name="take_damage_cooldown" type="Timer" parent="."]
@@ -202,6 +203,7 @@ offset_top = 6.9999995
 offset_right = 189.99998
 offset_bottom = 47.0
 scale = Vector2(0.1, 0.1)
+max_value = 60.0
 show_percentage = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

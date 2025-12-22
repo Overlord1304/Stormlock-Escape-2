@@ -1,11 +1,10 @@
 extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
-var storm = null
-var storm_avoid_distance = 120
-var speed = 60
+
+var speed = 40
 var player_chase = false
 var player = null
-var health = 80
+var health = 300
 var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
@@ -21,11 +20,9 @@ func _physics_process(delta):
 
 	else:
 		var desired_velocity := Vector2.ZERO
-		if storm:
-			var away_dir = (global_position - storm.global_position).normalized()
-			nav_agent.target_position = global_position + away_dir * 500
 
-		elif player_chase and player:
+
+		if player_chase and player:
 			nav_agent.target_position = player.global_position
 
 
@@ -99,7 +96,7 @@ func _on_take_damage_cooldown_timeout() -> void:
 func update_health():
 	var healthbar = $healthbar
 	healthbar.value = health
-	if health >= 80:
+	if health >= 340:
 		healthbar.hide()
 	else:
 		healthbar.show()
@@ -122,18 +119,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		died.emit()
 		queue_free()
 
-func _on_storm_detector_area_entered(area: Area2D) -> void:
-	
-	if area.is_in_group("storm"):
-		
-		storm = area
 
-
-func _on_storm_detector_area_exited(area: Area2D) -> void:
-
-	if area == storm:
-		
-		storm = null
 func play_attack() -> void:
 	if is_attacking:
 		return

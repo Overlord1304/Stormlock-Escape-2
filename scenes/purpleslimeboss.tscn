@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://usp5l6rs3ebe"]
+[gd_scene load_steps=27 format=3 uid="uid://usp5l6rs3ebe"]
 
 [ext_resource type="Script" uid="uid://basgj6rxkl6xq" path="res://scripts/psb.gd" id="1_xcrj1"]
 [ext_resource type="Texture2D" uid="uid://dlqgxcserfkdf" path="res://sprites/slime death.png" id="2_21bvy"]
@@ -146,15 +146,12 @@ animations = [{
 radius = 437.96442
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ck05h"]
-size = Vector2(24.8, 20)
+size = Vector2(27, 18.666668)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ludtu"]
-size = Vector2(23.000002, 20)
+size = Vector2(24.26667, 18.666668)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_axwnf"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_hojqu"]
-radius = 94.00532
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["enemy"]]
 z_index = 2
@@ -176,13 +173,13 @@ shape = SubResource("CircleShape2D_ludtu")
 [node name="hitbox" type="Area2D" parent="."]
 
 [node name="right" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-0.6000003, -0.9999998)
+position = Vector2(0.49999952, -1.6666664)
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_ck05h")
 
 [node name="left" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-5.899999, -0.99999976)
-scale = Vector2(0.9999998, 0.9999998)
+position = Vector2(-6.5333343, -1.6666658)
+scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_ludtu")
 
 [node name="take_damage_cooldown" type="Timer" parent="."]
@@ -199,7 +196,7 @@ max_value = 300.0
 show_percentage = false
 
 [node name="left" type="CollisionShape2D" parent="."]
-position = Vector2(-5.8000007, -1.5)
+position = Vector2(-5.800001, -4.5)
 shape = SubResource("CircleShape2D_axwnf")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
@@ -207,15 +204,8 @@ path_desired_distance = 100.0
 target_desired_distance = 100.0
 avoidance_enabled = true
 
-[node name="storm_detector" type="Area2D" parent="."]
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="storm_detector"]
-shape = SubResource("CircleShape2D_hojqu")
-
 [node name="right" type="CollisionShape2D" parent="."]
-position = Vector2(1.5999988, -1.5)
+position = Vector2(1.5999988, -4.500001)
 shape = SubResource("CircleShape2D_axwnf")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
@@ -224,7 +214,3 @@ shape = SubResource("CircleShape2D_axwnf")
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="timeout" from="take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
-[connection signal="area_entered" from="storm_detector" to="." method="_on_storm_detector_area_entered"]
-[connection signal="area_exited" from="storm_detector" to="." method="_on_storm_detector_area_exited"]
-[connection signal="body_entered" from="storm_detector" to="." method="_on_storm_detector_body_entered"]
-[connection signal="body_exited" from="storm_detector" to="." method="_on_storm_detector_body_exited"]

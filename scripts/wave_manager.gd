@@ -3,10 +3,14 @@ extends Node
 @export var enemy_scenes = [
 	{"ps": preload("res://scenes/purpleslime.tscn")},
 	{"pss": preload("res://scenes/purpleslimesmall.tscn")},
-	{"crab": preload("res://scenes/crab.tscn")}
+	{"c": preload("res://scenes/crab.tscn")},
+	{"cs": preload("res://scenes/crabsmall.tscn")}
 ]
 @export var food_scene: PackedScene
-@export var boss_scene: PackedScene
+@export var boss_scenes = [
+	{"psb": preload("res://scenes/purpleslimeboss.tscn")},
+	{"cb": preload("res://scenes/crabboss.tscn")}
+]
 @export var enemies_per_wave := 7
 @export var time_between_waves := 3.0
 @export var food_per_wave = 3
@@ -29,7 +33,17 @@ func get_random_enemy():
 		else:
 			return enemy_scenes[1]["pss"]
 	elif current_wave > 5:
-		return enemy_scenes[2]["crab"]
+		if rand < 50:
+			return enemy_scenes[2]["c"]
+		elif rand > 50 and rand < 80:
+			return enemy_scenes[0]["ps"]
+		else:
+			return enemy_scenes[3]["cs"]
+func get_random_boss():
+	if current_wave == 5:
+		return boss_scenes[0]["psb"]
+	elif current_wave >= 10:
+		return boss_scenes[1]["cb"]
 func start_next_wave():
 	current_wave += 1
 	wave_label.text = "Wave " + str(current_wave)
@@ -70,7 +84,7 @@ func spawn_boss():
 		return
 	var spawn = available_spawns.pick_random()
 	available_spawns.erase(spawn)
-	var boss = boss_scene.instantiate()
+	var boss = get_random_boss().instantiate()
 	boss.global_position = spawn.global_position
 	get_parent().add_child(boss)
 	boss.died.connect(_on_boss_died)

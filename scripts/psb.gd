@@ -1,11 +1,9 @@
 extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
-var storm = null
-var storm_avoid_distance = 120
 var speed = 40
 var player_chase = false
 var player = null
-var health = 300
+var health = 200
 var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
@@ -134,7 +132,7 @@ func _on_take_damage_cooldown_timeout() -> void:
 func update_health():
 	var healthbar = $healthbar
 	healthbar.value = health
-	if health >= 300:
+	if health >= 200:
 		healthbar.hide()
 	else:
 		healthbar.show()
@@ -154,16 +152,3 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		Global.score += 100
 		died.emit()
 		queue_free()
-
-func _on_storm_detector_area_entered(area: Area2D) -> void:
-	
-	if area.is_in_group("storm"):
-		
-		storm = area
-
-
-func _on_storm_detector_area_exited(area: Area2D) -> void:
-
-	if area == storm:
-		
-		storm = null

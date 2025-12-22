@@ -2,10 +2,10 @@ extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
 var storm = null
 var storm_avoid_distance = 120
-var speed = 60
+var speed = 90
 var player_chase = false
 var player = null
-var health = 80
+var health = 60
 var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
@@ -99,7 +99,7 @@ func _on_take_damage_cooldown_timeout() -> void:
 func update_health():
 	var healthbar = $healthbar
 	healthbar.value = health
-	if health >= 80:
+	if health >= 60:
 		healthbar.hide()
 	else:
 		healthbar.show()

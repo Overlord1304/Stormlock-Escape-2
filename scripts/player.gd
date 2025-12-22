@@ -13,7 +13,7 @@ var can_move = false
 var crab = null
 var attack_ip = false
 
-@export var speed = 100
+@onready var speed = 100
 
 var direction = Vector2.ZERO
 var last_dir = "down"
