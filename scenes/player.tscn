@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=3 uid="uid://bl1q7wod3c3q3"]
+[gd_scene load_steps=140 format=3 uid="uid://bl1q7wod3c3q3"]
 
 [ext_resource type="Texture2D" uid="uid://f4318kvo18qa" path="res://sprites/down-attack.png" id="1_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://s3sok2cvk77f" path="res://sprites/idle-down.png" id="1_g2els"]
@@ -920,10 +920,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
-size = Vector2(10, 14)
+size = Vector2(2, 14)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f1ej7"]
 radius = 7.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ke2ow"]
+size = Vector2(16, 2)
 
 [node name="Node2D" type="CharacterBody2D" groups=["player"]]
 z_index = 1
@@ -935,10 +938,10 @@ script = ExtResource("1_jej6c")
 position = Vector2(-2, 4.5)
 scale = Vector2(0.6875, 0.65625006)
 sprite_frames = SubResource("SpriteFrames_ur7pv")
-animation = &"idle_right"
+animation = &"attack_up"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 6)
+[node name="right" type="CollisionShape2D" parent="."]
+position = Vector2(5, 6)
 shape = SubResource("RectangleShape2D_g2els")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -970,6 +973,18 @@ offset_right = 100.99998
 offset_bottom = 41.0
 scale = Vector2(0.1, 0.1)
 show_percentage = false
+
+[node name="left" type="CollisionShape2D" parent="."]
+position = Vector2(-8, 6)
+shape = SubResource("RectangleShape2D_g2els")
+
+[node name="down" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 15)
+shape = SubResource("RectangleShape2D_ke2ow")
+
+[node name="up" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -3)
+shape = SubResource("RectangleShape2D_ke2ow")
 
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]

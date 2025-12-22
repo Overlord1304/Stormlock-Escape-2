@@ -162,9 +162,10 @@ animations = [{
 radius = 76.05919
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ludtu"]
-size = Vector2(26, 21)
+size = Vector2(32, 21)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_axwnf"]
+radius = 6.0207973
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hojqu"]
 radius = 94.00532
@@ -205,7 +206,7 @@ scale = Vector2(0.1, 0.1)
 show_percentage = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1.5)
+position = Vector2(0, -0.5)
 shape = SubResource("CircleShape2D_axwnf")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

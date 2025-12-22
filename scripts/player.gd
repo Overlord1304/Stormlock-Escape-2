@@ -21,7 +21,8 @@ var direction = Vector2.ZERO
 var last_dir = "down"
 
 
-
+func _ready():
+	$AnimatedSprite2D.play("idle_down")
 func _physics_process(delta):
 	attack()
 	enemy_attack()
@@ -57,6 +58,10 @@ func _update_anim():
 			last_dir = "right" if direction.x > 0 else "left"
 		else:
 			last_dir = "down" if direction.y > 0 else "up"
+		$right.disabled = last_dir != "right"
+		$left.disabled = last_dir != "left"
+		$up.disabled = last_dir != "up"
+		$down.disabled = last_dir != "down"
 		anim = "walk_" + last_dir
 	else:
 		if attack_ip == false:

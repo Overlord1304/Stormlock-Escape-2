@@ -12,6 +12,7 @@ func _ready():
 	load_high_score()
 	Global.score = 0
 	Global.player_died = false
+
 func _process(delta) -> void:
 	if not Global.player_died:
 		check_high_score()

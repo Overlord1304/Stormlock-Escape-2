@@ -12,7 +12,7 @@ extends Node
 	{"psb": preload("res://scenes/purpleslimeboss.tscn")},
 	{"cb": preload("res://scenes/crabboss.tscn")}
 ]
-@export var enemies_per_wave := 1
+@export var enemies_per_wave := 7
 @export var time_between_waves := 3.0
 @export var food_per_wave = 3
 var current_wave := 0
@@ -29,17 +29,22 @@ func _ready():
 func get_random_enemy():
 	var rand = randi() % 100
 	if current_wave < 5:
-		if rand < 90:
-			return enemy_scenes[4]["m"]
+		if rand < 60:
+			return enemy_scenes[0]["ps"]
 		else:
 			return enemy_scenes[1]["pss"]
-	elif current_wave > 5:
+	elif current_wave < 10:
 		if rand < 50:
 			return enemy_scenes[2]["c"]
 		elif rand > 50 and rand < 80:
 			return enemy_scenes[0]["ps"]
 		else:
 			return enemy_scenes[3]["cs"]
+	elif current_wave > 10:
+		if rand < 50:
+			return enemy_scenes[4]["m"]
+		else:
+			return enemy_scenes[3]["cs"] 
 func get_random_boss():
 	if current_wave == 5:
 		return boss_scenes[0]["psb"]

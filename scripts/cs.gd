@@ -2,7 +2,7 @@ extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
 var storm = null
 var storm_avoid_distance = 120
-var speed = 90
+var speed = 80
 var player_chase = false
 var player = null
 var health = 60

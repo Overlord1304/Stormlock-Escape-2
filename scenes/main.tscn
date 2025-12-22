@@ -189,7 +189,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(9, -11, 718, -11, 1098,
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_choun"]
 shader = ExtResource("9_85g3d")
 shader_parameter/strength = 0.0010000000475
-shader_parameter/heat_color = Color(1, 0.5, 0, 0.1)
+shader_parameter/heat_color = Color(0.3153937, 0.14012259, 0, 0.27450982)
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_tefeu")

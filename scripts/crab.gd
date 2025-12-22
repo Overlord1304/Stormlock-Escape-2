@@ -2,7 +2,7 @@ extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
 var storm = null
 var storm_avoid_distance = 120
-var speed = 80
+var speed = 60
 var player_chase = false
 var player = null
 var health = 80
@@ -135,7 +135,7 @@ func _on_storm_detector_area_exited(area: Area2D) -> void:
 		
 		storm = null
 func play_attack() -> void:
-	if is_attacking:
+	if is_attacking or is_dead:
 		return
 	is_attacking = true
 	$AnimatedSprite2D.play("attack")
