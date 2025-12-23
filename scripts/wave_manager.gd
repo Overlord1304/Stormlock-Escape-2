@@ -10,12 +10,13 @@ extends Node
 @export var food_scene: PackedScene
 @export var boss_scenes = [
 	{"psb": preload("res://scenes/purpleslimeboss.tscn")},
-	{"cb": preload("res://scenes/crabboss.tscn")}
+	{"cb": preload("res://scenes/crabboss.tscn")},
+	{"mb": preload("res://scenes/mb.tscn")}
 ]
 @export var enemies_per_wave := 7
 @export var time_between_waves := 3.0
 @export var food_per_wave = 3
-var current_wave := 0
+var current_wave := 14
 var enemies_alive
 
 var available_spawns: Array = []
@@ -48,8 +49,10 @@ func get_random_enemy():
 func get_random_boss():
 	if current_wave == 5:
 		return boss_scenes[0]["psb"]
-	elif current_wave >= 10:
+	elif current_wave == 10:
 		return boss_scenes[1]["cb"]
+	elif current_wave >= 15:
+		return boss_scenes[2]["mb"]
 func start_next_wave():
 	current_wave += 1
 	wave_label.text = "Wave " + str(current_wave)

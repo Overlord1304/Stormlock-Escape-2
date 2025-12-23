@@ -104,6 +104,7 @@ func update_health():
 		healthbar.show()
 
 func die():
+	$CollisionShape2D.disabled = true
 	is_dead = true
 	player_chase = false
 	can_take_damage = false
@@ -111,7 +112,7 @@ func die():
 	$AnimatedSprite2D.play("death")
 	$hitbox/right.disabled = true
 	$hitbox/left.disabled = true
-	
+
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if is_dead and $AnimatedSprite2D.animation == "death":

@@ -6,18 +6,19 @@ extends CharacterBody2D
 @onready var laser_area = $LaserArea
 @onready var laser_shape_right = $LaserArea/right
 @onready var laser_shape_left = $LaserArea/left
-
+@onready var discharge_area = $ElectricDischarge
+@onready var discharge_timer = $DischargeTimer
+var discharge_damage = 25
+var can_discharge = true
 var is_warning = false
 var warning_time = 1
 var laser_damage = 30
 var laser_range = 100000
 var can_laser_damage = true
-var storm = null
-var storm_avoid_distance = 120
 var speed = 60
 var player_chase = false
 var player = null
-var health = 100
+var health = 300
 var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
@@ -40,7 +41,11 @@ func _ready():
 	laser_cooldown_timer.one_shot = true
 	laser_cooldown_timer.timeout.connect(_on_laser_cooldown_timeout)
 	add_child(laser_cooldown_timer)
-
+	warning_timer.one_shot = true
+	discharge_timer.wait_time = 7.0
+	discharge_timer.one_shot = false
+	discharge_timer.timeout.connect(_on_discharge_timer_timeout)
+	discharge_timer.start()
 func _physics_process(delta):
 	update_health()
 	deal_with_damage()
@@ -59,10 +64,8 @@ func _physics_process(delta):
 	
 	
 	var desired_velocity := Vector2.ZERO
-	if storm:
-		var away_dir = (global_position - storm.global_position).normalized()
-		nav_agent.target_position = global_position + away_dir * 500
-	elif player_chase and player:
+
+	if player_chase and player:
 		var dx = abs(player.global_position.x - global_position.x)
 		var dy = abs(player.global_position.y - global_position.y)
 		
@@ -103,11 +106,16 @@ func _physics_process(delta):
 			$AnimatedSprite2D.flip_h = velocity.x < 0
 		else:
 			$AnimatedSprite2D.play("idle")
-
+func _on_discharge_timer_timeout():
+	if is_dead:
+		return
+	if is_warning or is_attacking:
+		return
+	start_discharge()
 func start_warning():
 	if is_dead or not can_fire_laser:
 		return
-	
+	can_fire_laser = false
 	is_warning = true
 	velocity = Vector2.ZERO
 	nav_agent.target_position = global_position
@@ -115,11 +123,21 @@ func start_warning():
 	
 	warning_facing_right = not $AnimatedSprite2D.flip_h
 	
-	$AnimatedSprite2D.play("attack_warning")
+	$AnimatedSprite2D.play("laser_warning")
 	warning_timer.start(warning_time)
-
+func start_discharge():
+	can_discharge = false
+	is_warning = true
+	velocity = Vector2.ZERO
+	nav_agent.target_position = global_position
+	$AnimatedSprite2D.play("attack_warning")
+	await get_tree().create_timer(warning_time).timeout
+	if is_dead:
+		return
+	is_warning = false
+	play_discharge()
 func laser_attack():
-	if not can_laser_damage or is_dead or not can_fire_laser:
+	if not can_laser_damage or is_dead:
 		return
 	
 	is_attacking = true
@@ -155,6 +173,14 @@ func laser_attack():
 				body.take_laser_damage(laser_damage)
 				laser_has_hit_player = true
 			break
+func play_discharge():
+	is_attacking = true
+	$AnimatedSprite2D.play("attack")
+	discharge_area.monitoring = true
+	await get_tree().create_timer(2).timeout
+	discharge_area.monitoring = false
+	is_attacking = false
+	can_discharge = true
 func _on_laser_ray_timer_timeout():
 	
 	laser_active = false
@@ -162,7 +188,7 @@ func _on_laser_ray_timer_timeout():
 	laser_shape_right.disabled = true
 	laser_shape_left.disabled = true
 	
-	
+	is_attacking = false
 	laser_cooldown_timer.start()
 
 func _on_laser_cooldown_timeout():
@@ -191,7 +217,7 @@ func play_attack() -> void:
 	if is_attacking:
 		return
 	is_attacking = true
-	$AnimatedSprite2D.play("attack")
+	$AnimatedSprite2D.play("laser")
 
 func can_see_player() -> bool:
 	if is_dead or not player:
@@ -260,13 +286,14 @@ func _on_take_damage_cooldown_timeout() -> void:
 	can_take_damage = true
 
 func update_health():
+	
 	var healthbar = $healthbar
 	healthbar.value = health
-	if health >= 100:
+	if health >= 300:
 		healthbar.hide()
 	else:
 		healthbar.show()
-
+	
 func die():
 	$CollisionShape2D.disabled = true
 	is_dead = true
@@ -279,7 +306,7 @@ func die():
 	$hitbox/hitbox.disabled = true
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	if is_attacking and $AnimatedSprite2D.animation == "attack":
+	if is_attacking and $AnimatedSprite2D.animation == "laser":
 		is_attacking = false
 
 	if is_dead and $AnimatedSprite2D.animation == "death":
@@ -287,10 +314,11 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		died.emit()
 		queue_free()
 
-func _on_storm_detector_area_entered(area: Area2D) -> void:
-	if area.is_in_group("storm"):
-		storm = area
 
-func _on_storm_detector_area_exited(area: Area2D) -> void:
-	if area == storm:
-		storm = null
+func _on_electric_discharge_body_entered(body: Node2D) -> void:
+	if not is_attacking or is_dead:
+		return
+
+	if body.is_in_group("player"):
+		if body.has_method("take_laser_damage"):
+			body.take_laser_damage(discharge_damage)

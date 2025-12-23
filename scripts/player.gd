@@ -1,7 +1,8 @@
 extends CharacterBody2D
 enum DeathType {
 	SLIME,
-	ENEMY,
+	NORMAL,
+	MECH,
 	STORM
 }
 var enemy_inattack_range = false
@@ -32,7 +33,7 @@ func _physics_process(delta):
 		crab.play_attack()
 	if health <= 0:
 		if crab_inattack_range:
-			die(DeathType.ENEMY)
+			die(DeathType.NORMAL)
 		else:
 			die(DeathType.SLIME)
 		return
@@ -108,7 +109,7 @@ func enemy_attack():
 		$attack_cooldown.start()
 		if health <= 0:
 			if crab_inattack_range or mech_inattack_range:
-				die(DeathType.ENEMY)
+				die(DeathType.NORMAL)
 			else:
 				die(DeathType.SLIME)
 func psb_attack():
@@ -117,13 +118,13 @@ func psb_attack():
 		enemy_attack_cooldown = false
 		$attack_cooldown.start()
 		if health <= 0:
-			die(DeathType.ENEMY)
+			die(DeathType.NORMAL)
 func take_laser_damage(amount):
 	health -= amount
 	update_health()
 
 	if health <= 0:
-		die(DeathType.ENEMY)
+		die(DeathType.MECH)
 func _on_timer_timeout() -> void:
 	
 	enemy_attack_cooldown = true
@@ -174,10 +175,12 @@ func die(death_type: DeathType):
 	match death_type:
 		DeathType.SLIME:
 			$AnimatedSprite2D.play("slime_death_" + last_dir)
-		DeathType.ENEMY:
+		DeathType.NORMAL:
 			$AnimatedSprite2D.play("enemy_death_" + last_dir)
 		DeathType.STORM:
 			$AnimatedSprite2D.play("storm_death_" + last_dir)
+		DeathType.MECH:
+			$AnimatedSprite2D.play("mech_death_" + last_dir) 
 	await $AnimatedSprite2D.animation_finished
 	get_tree().reload_current_scene()
 

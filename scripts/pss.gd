@@ -104,6 +104,7 @@ func update_health():
 		healthbar.show()
 
 func die():
+	$CollisionShape2D.disabled = true
 	is_dead = true
 	player_chase = false
 	can_take_damage = false

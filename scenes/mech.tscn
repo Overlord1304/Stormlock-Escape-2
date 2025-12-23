@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://djoskhwta4feb"]
+[gd_scene load_steps=30 format=3 uid="uid://djoskhwta4feb"]
 
 [ext_resource type="Script" uid="uid://c0mark4wfl2sk" path="res://scripts/mech.gd" id="1_dqpf0"]
 [ext_resource type="Texture2D" uid="uid://gtm5ho1n18i1" path="res://sprites/mech_attack.png" id="2_cdjsb"]
@@ -175,6 +175,9 @@ radius = 11.011357
 [sub_resource type="CircleShape2D" id="CircleShape2D_hojqu"]
 radius = 94.00532
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cdjsb"]
+size = Vector2(968, 17)
+
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["enemy", "mech"]]
 collision_layer = 6
 collision_mask = 6
@@ -227,6 +230,7 @@ collision_mask = 5
 shape = SubResource("CircleShape2D_hojqu")
 
 [node name="LaserRay" type="RayCast2D" parent="."]
+position = Vector2(0, -1)
 target_position = Vector2(979, 1)
 
 [node name="LaserRayTimer" type="Timer" parent="."]
@@ -235,6 +239,16 @@ wait_time = 5.0
 [node name="AttackWarningTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="LaserArea" type="Area2D" parent="."]
+
+[node name="right" type="CollisionShape2D" parent="LaserArea"]
+position = Vector2(498, 0.5)
+shape = SubResource("RectangleShape2D_cdjsb")
+
+[node name="left" type="CollisionShape2D" parent="LaserArea"]
+position = Vector2(-502, 0)
+shape = SubResource("RectangleShape2D_cdjsb")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="detrection zone" to="." method="_on_area_2d_body_entered"]
@@ -248,3 +262,4 @@ one_shot = true
 [connection signal="body_exited" from="storm_detector" to="." method="_on_storm_detector_body_exited"]
 [connection signal="timeout" from="LaserRayTimer" to="." method="_on_laser_ray_timer_timeout"]
 [connection signal="timeout" from="AttackWarningTimer" to="." method="_on_attack_warning_timer_timeout"]
+[connection signal="body_entered" from="LaserArea" to="." method="_on_laser_area_body_entered"]
