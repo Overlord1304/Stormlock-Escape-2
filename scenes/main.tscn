@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://egov8gpmx4rd"]
+[gd_scene load_steps=19 format=4 uid="uid://egov8gpmx4rd"]
 
 [ext_resource type="PackedScene" uid="uid://bl1q7wod3c3q3" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://xydgxot5au6r" path="res://scripts/game.gd" id="1_tefeu"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://j3ty7qfi884i" path="res://scenes/storm.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://conhi1a8il2xk" path="res://scenes/food.tscn" id="8_tipki"]
 [ext_resource type="Shader" uid="uid://dcx6omaisysqm" path="res://shaders/main.gdshader" id="9_85g3d"]
+[ext_resource type="AudioStream" uid="uid://dk5668o3xg4gj" path="res://music/bossfightse2.ogg" id="9_choun"]
+[ext_resource type="AudioStream" uid="uid://uo8gvit5mie6" path="res://music/gamebgse2.ogg" id="10_choun"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
 texture = ExtResource("3_sugp2")
@@ -699,3 +701,9 @@ offset_right = 144.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.1254902)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_choun")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_choun")

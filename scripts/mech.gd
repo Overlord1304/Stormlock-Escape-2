@@ -6,7 +6,13 @@ extends CharacterBody2D
 @onready var laser_area = $LaserArea
 @onready var laser_shape_right = $LaserArea/right
 @onready var laser_shape_left = $LaserArea/left
-
+var idle_speed = 40
+var walk_time = 3.0
+var idle_time = 2.0
+var idle_direction = 1
+var idle_timer = 0.0
+var idle_walking = true
+var force_idle = false
 var is_warning = false
 var warning_time = 1
 var laser_damage = 30
@@ -76,7 +82,23 @@ func _physics_process(delta):
 				global_position.x,
 				player.global_position.y
 			)
-
+	else:
+		idle_timer += delta
+		if idle_walking:
+			force_idle = false
+			desired_velocity.x = idle_speed * idle_direction
+			if idle_timer >= walk_time:
+				idle_timer = 0.0
+				idle_walking = false
+				force_idle = true
+		else:
+			force_idle = true
+			desired_velocity = Vector2.ZERO
+			if idle_timer > idle_time:
+				idle_timer = 0.0
+				idle_walking = true
+				idle_direction *= -1
+				force_idle = false
 	if not nav_agent.is_navigation_finished():
 		var next_point = nav_agent.get_next_path_position()
 		var direction = (next_point - global_position).normalized()

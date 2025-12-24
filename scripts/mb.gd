@@ -1,4 +1,5 @@
 extends CharacterBody2D
+@onready var gravity = 1200
 @onready var nav_agent = $NavigationAgent2D
 @onready var laser_ray = $LaserRay
 @onready var laser_timer = $LaserRayTimer
@@ -8,6 +9,13 @@ extends CharacterBody2D
 @onready var laser_shape_left = $LaserArea/left
 @onready var discharge_area = $ElectricDischarge
 @onready var discharge_timer = $DischargeTimer
+var idle_speed = 40
+var walk_time = 3.0
+var idle_time = 2.0
+var idle_direction = 1
+var idle_timer = 0.0
+var idle_walking = true
+var force_idle = false
 var discharge_damage = 25
 var can_discharge = true
 var is_warning = false
@@ -25,8 +33,8 @@ var is_dead = false
 var is_attacking = false
 var laser_active := false
 var laser_has_hit_player := false
-
-
+var direction = 1
+var code_green = false
 var warning_facing_right: bool = false
 
 var laser_cooldown_timer: Timer
@@ -47,6 +55,17 @@ func _ready():
 	discharge_timer.timeout.connect(_on_discharge_timer_timeout)
 	discharge_timer.start()
 func _physics_process(delta):
+	var scene_path = get_tree().current_scene.scene_file_path
+	if scene_path == "res://scenes/main_menu.tscn":
+		code_green = true
+		if not is_on_floor():
+			velocity.y += gravity*delta
+		if is_on_wall():
+			direction *= -1
+		velocity.x = 2*speed * direction
+		move_and_slide()
+	else:
+		code_green = false
 	update_health()
 	deal_with_damage()
 	
@@ -79,7 +98,23 @@ func _physics_process(delta):
 				global_position.x,
 				player.global_position.y
 			)
-
+	else:
+		idle_timer += delta
+		if idle_walking:
+			force_idle = false
+			desired_velocity.x = idle_speed * idle_direction
+			if idle_timer >= walk_time:
+				idle_timer = 0.0
+				idle_walking = false
+				force_idle = true
+		else:
+			force_idle = true
+			desired_velocity = Vector2.ZERO
+			if idle_timer > idle_time:
+				idle_timer = 0.0
+				idle_walking = true
+				idle_direction *= -1
+				force_idle = false
 	if not nav_agent.is_navigation_finished():
 		var next_point = nav_agent.get_next_path_position()
 		var direction = (next_point - global_position).normalized()
@@ -109,7 +144,7 @@ func _physics_process(delta):
 func _on_discharge_timer_timeout():
 	if is_dead:
 		return
-	if is_warning or is_attacking:
+	if is_warning or is_attacking or code_green:
 		return
 	start_discharge()
 func start_warning():

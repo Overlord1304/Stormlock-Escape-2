@@ -16,7 +16,7 @@ extends Node
 @export var enemies_per_wave := 7
 @export var time_between_waves := 3.0
 @export var food_per_wave = 3
-var current_wave := 14
+var current_wave := 3
 var enemies_alive
 
 var available_spawns: Array = []
@@ -60,8 +60,12 @@ func start_next_wave():
 	available_spawns = spawn_points.duplicate()
 	spawn_food()
 	if current_wave % 5 == 0:
+		fade_out_music(2)
+		$"../AudioStreamPlayer".play()
 		spawn_boss()
 	else:
+		fade_out_boss_music(2)
+		$"../AudioStreamPlayer2".play()
 		for i in enemies_alive:
 			if available_spawns.is_empty():
 				break 
@@ -118,3 +122,12 @@ func _on_boss_died():
 		storm.reset_storm()
 	await get_tree().create_timer(time_between_waves).timeout
 	start_next_wave()
+func fade_out_boss_music(duration):
+	var tween = get_tree().create_tween()
+	tween.tween_property($"../AudioStreamPlayer","volume_db",-80,duration)
+	tween.tween_callback($"../AudioStreamPlayer".stop)
+	$"../AudioStreamPlayer2".play()
+func fade_out_music(duration):
+	var tween = get_tree().create_tween()
+	tween.tween_property($"../AudioStreamPlayer2","volume_db",-80,duration)
+	tween.tween_callback($"../AudioStreamPlayer2".stop)

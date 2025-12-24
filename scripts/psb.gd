@@ -1,5 +1,12 @@
 extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
+var idle_speed = 40
+var walk_time = 3.0
+var idle_time = 2.0
+var idle_direction = 1
+var idle_timer = 0.0
+var idle_walking = true
+var force_idle = false
 var speed = 40
 var player_chase = false
 var player = null
@@ -39,7 +46,23 @@ func _physics_process(delta):
 	if player_chase and player:
 		nav_agent.target_position = player.global_position
 
-
+	else:
+		idle_timer += delta
+		if idle_walking:
+			force_idle = false
+			desired_velocity.x = idle_speed * idle_direction
+			if idle_timer >= walk_time:
+				idle_timer = 0.0
+				idle_walking = false
+				force_idle = true
+		else:
+			force_idle = true
+			desired_velocity = Vector2.ZERO
+			if idle_timer > idle_time:
+				idle_timer = 0.0
+				idle_walking = true
+				idle_direction *= -1
+				force_idle = false
 	if not nav_agent.is_navigation_finished():
 		var next_point = nav_agent.get_next_path_position()
 		var direction = (next_point - global_position).normalized()
@@ -138,7 +161,8 @@ func update_health():
 		healthbar.show()
 
 func die():
-	$CollisionShape2D.disabled = true
+	$left.disabled = true
+	$right.disabled = true
 	is_dead = true
 	player_chase = false
 	can_take_damage = false

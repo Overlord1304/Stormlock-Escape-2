@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cnja45pmji5h8"]
+[gd_scene load_steps=22 format=3 uid="uid://cnja45pmji5h8"]
 
 [ext_resource type="Script" uid="uid://2ku2tbmetn6s" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://sa5uqnal12bl" path="res://sprites/playbtn2.png" id="2_bqqt6"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dptf3qbncjlhi" path="res://sprites/Screenshot 2025-12-22 211440.png" id="4_rtw2f"]
 [ext_resource type="Texture2D" uid="uid://c0sq732wvk8sw" path="res://sprites/logo.png" id="5_oa1go"]
 [ext_resource type="Texture2D" uid="uid://hwpplo08h6d6" path="res://sprites/storm.png" id="6_rtw2f"]
+[ext_resource type="PackedScene" uid="uid://d3qqreh404bjs" path="res://scenes/mb.tscn" id="7_oa1go"]
+[ext_resource type="AudioStream" uid="uid://briocdocfydn" path="res://music/bgse2.ogg" id="8_tbmy8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oa1go"]
 atlas = ExtResource("6_rtw2f")
@@ -57,33 +59,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_rtw2f"]
-resource_name = "stormclose"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("leftstorm:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-2363, 330), Vector2(-1862.0001, 329)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("rightstorm:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(3520, 329.00003), Vector2(2942, 330)]
-}
-
 [sub_resource type="Animation" id="Animation_oa1go"]
 length = 0.001
 tracks/0/type = "value"
@@ -109,6 +84,33 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(3520, 329.00003)]
+}
+
+[sub_resource type="Animation" id="Animation_rtw2f"]
+resource_name = "stormclose"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("leftstorm:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-2363, 330), Vector2(-1862.0001, 329)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rightstorm:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3520, 329.00003), Vector2(2942, 330)]
 }
 
 [sub_resource type="Animation" id="Animation_tbmy8"]
@@ -145,6 +147,12 @@ _data = {
 &"stormopen": SubResource("Animation_tbmy8")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbmy8"]
+size = Vector2(1958, 126)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oa1go"]
+size = Vector2(180, 246.5)
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -180,11 +188,13 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="leftstorm" type="AnimatedSprite2D" parent="."]
+z_index = 2
 position = Vector2(-2363, 330)
 scale = Vector2(20.2, 20.2)
 sprite_frames = SubResource("SpriteFrames_rcqid")
 
 [node name="rightstorm" type="AnimatedSprite2D" parent="."]
+z_index = 2
 position = Vector2(3520, 329.00003)
 scale = Vector2(20.2, 20.2)
 sprite_frames = SubResource("SpriteFrames_rcqid")
@@ -194,6 +204,28 @@ flip_h = true
 libraries = {
 &"": SubResource("AnimationLibrary_jk1qb")
 }
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("7_oa1go")]
+position = Vector2(546, 552)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(703, 707)
+shape = SubResource("RectangleShape2D_tbmy8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1121, 525.25)
+shape = SubResource("RectangleShape2D_oa1go")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(44, 522)
+shape = SubResource("RectangleShape2D_oa1go")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_tbmy8")
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="animation_finished" from="rightstorm" to="." method="_on_rightstorm_animation_finished"]
