@@ -27,25 +27,29 @@ func _physics_process(delta):
 
 	if is_dead:
 		return
-	if not is_charging:
-		charge_timer -= delta
-		if charge_timer <= 0:
-			start_charge()
-	else:
+
+	if is_charging:
+		
+		if player:
+		
+			charge_direction = (player.global_position - global_position).normalized()
+		velocity = charge_direction * charge_speed
+		move_and_slide()
+		$AnimatedSprite2D.play("move")
+		$AnimatedSprite2D.flip_h = velocity.x < 0
 		charge_timer -= delta
 		if charge_timer <= 0:
 			end_charge()
-		else:
-			velocity = charge_direction * charge_speed
-			move_and_slide()
-			$AnimatedSprite2D.play("move")
-			$AnimatedSprite2D.flip_h = velocity.x < 0
-			return
+		return
+	else:
+		charge_timer -= delta
+		if charge_timer <= 0:
+			start_charge()
+
 	var desired_velocity := Vector2.ZERO
 
 	if player_chase and player:
 		nav_agent.target_position = player.global_position
-
 	else:
 		idle_timer += delta
 		if idle_walking:
@@ -63,34 +67,32 @@ func _physics_process(delta):
 				idle_walking = true
 				idle_direction *= -1
 				force_idle = false
-	if not nav_agent.is_navigation_finished():
-		var next_point = nav_agent.get_next_path_position()
-		var direction = (next_point - global_position).normalized()
-		var final_speed = speed
 
-		if player_chase and player:
+	if player_chase and player:
+		if nav_agent.is_navigation_finished():
+			
+			var direction = (player.global_position - global_position).normalized()
+			desired_velocity = direction * speed
+		else:
+			var next_point = nav_agent.get_next_path_position()
+			var direction = (next_point - global_position).normalized()
+
 			var dist = global_position.distance_to(player.global_position)
-
-	
 			var slow_radius := 48.0
-
+			var final_speed = speed
 			if dist < slow_radius:
-				var t = dist / slow_radius
-				final_speed = speed * lerp(0.8, 1.0, t)
+				final_speed = speed * (dist / slow_radius)
 
-		desired_velocity = direction * final_speed
+			desired_velocity = direction * final_speed
 
-	
 	var acceleration := 800.0
 	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
-
 	move_and_slide()
 
-	
 	if velocity.length() > 5:
 		$AnimatedSprite2D.play("move")
 		$AnimatedSprite2D.flip_h = velocity.x < 0
-		if $AnimatedSprite2D.flip_h == true:
+		if $AnimatedSprite2D.flip_h:
 			$hitbox/left.disabled = false
 			$hitbox/right.disabled = true
 			$left.disabled = false
@@ -102,18 +104,20 @@ func _physics_process(delta):
 			$right.disabled = false
 	else:
 		$AnimatedSprite2D.play("idle")
+
+
 func start_charge():
-	if not player:
-
-		charge_direction = Vector2(randf() * 2 - 1, randf() * 2 - 1).normalized()
-	else:
-
+	if player:
 		charge_direction = (player.global_position - global_position).normalized()
+	else:
+		charge_direction = Vector2(randf() * 2 - 1, randf() * 2 - 1).normalized()
 	is_charging = true
 	charge_timer = charge_time
+
 func end_charge():
 	is_charging = false
 	charge_timer = charge_cooldown
+
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):
 		player = body

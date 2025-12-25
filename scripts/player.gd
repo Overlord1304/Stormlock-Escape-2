@@ -5,6 +5,8 @@ enum DeathType {
 	MECH,
 	STORM
 }
+var step_timer = 0.0
+var step_interval = 0.35
 var enemy_inattack_range = false
 var psb_inattack_range = false
 var crab_inattack_range = false
@@ -15,7 +17,7 @@ var can_move = false
 var crab = null
 var mech = null
 var attack_ip = false
-
+var was_moving = false
 @onready var speed = 100
 
 var direction = Vector2.ZERO
@@ -46,9 +48,30 @@ func _physics_process(delta):
 	
 	velocity = direction * speed
 	move_and_slide()
-	
+	handle_footsteps(delta)
 	_update_anim()
-
+func handle_footsteps(delta):
+	if !can_move or attack_ip or health <= 0:
+		$footsteps.stop()
+		step_timer = 0.0
+		was_moving = false
+		return
+	var is_moving = direction != Vector2.ZERO
+	if is_moving and !was_moving:
+		play_footstep()
+		step_timer = 0.0
+	if is_moving:
+		step_timer += delta
+		if step_timer >= step_interval:
+			play_footstep()
+			step_timer = 0.0
+	else:
+		step_timer = 0.0
+	was_moving = is_moving
+func play_footstep():
+	$footsteps.pitch_scale = randf_range(0.9, 1.1)
+	$footsteps.stop()
+	$footsteps.play()
 func _update_anim():
 	if attack_ip or health == 0:
 		return
@@ -133,7 +156,9 @@ func attack():
 	if Input.is_action_just_pressed("attack") and attack_ip == false:
 		attack_ip = true
 		Global.player_current_attack = true
-		
+		$attack.stop()
+		$attack.pitch_scale = randf_range(0.95,1.05)
+		$attack.play()
 		$deal_attack_timer.start()
 		
 		match last_dir:

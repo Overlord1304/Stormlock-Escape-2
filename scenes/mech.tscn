@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://djoskhwta4feb"]
+[gd_scene load_steps=31 format=3 uid="uid://djoskhwta4feb"]
 
 [ext_resource type="Script" uid="uid://c0mark4wfl2sk" path="res://scripts/mech.gd" id="1_dqpf0"]
 [ext_resource type="Texture2D" uid="uid://gtm5ho1n18i1" path="res://sprites/mech_attack.png" id="2_cdjsb"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://egb56rc8jw7c" path="res://sprites/mech_death.png" id="3_xkq0j"]
 [ext_resource type="Texture2D" uid="uid://udil7q3jq1n5" path="res://sprites/mech_idle.png" id="4_edian"]
 [ext_resource type="Texture2D" uid="uid://ddc6bfmlqx85e" path="res://sprites/mech_walking.png" id="5_a2oj4"]
+[ext_resource type="AudioStream" uid="uid://4k3otniax6tb" path="res://music/mech_laser.wav" id="7_xkq0j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cdjsb"]
 atlas = ExtResource("2_cdjsb")
@@ -249,6 +250,10 @@ shape = SubResource("RectangleShape2D_cdjsb")
 [node name="left" type="CollisionShape2D" parent="LaserArea"]
 position = Vector2(-502, 0)
 shape = SubResource("RectangleShape2D_cdjsb")
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_xkq0j")
+volume_db = -14.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="detrection zone" to="." method="_on_area_2d_body_entered"]

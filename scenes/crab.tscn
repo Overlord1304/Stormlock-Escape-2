@@ -171,6 +171,7 @@ radius = 6.0207973
 radius = 94.00532
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["crab", "enemy"]]
+z_index = 1
 collision_layer = 6
 collision_mask = 6
 script = ExtResource("1_ixvkc")

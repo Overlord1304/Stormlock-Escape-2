@@ -14,17 +14,17 @@ extends Node
 	{"mb": preload("res://scenes/mb.tscn")}
 ]
 @export var enemies_per_wave := 7
-@export var time_between_waves := 3.0
 @export var food_per_wave = 3
-var current_wave := 3
+var current_wave := 0
 var enemies_alive
-
+var last_wave_was_boss = false
 var available_spawns: Array = []
 var spawned_food: Array = []
 @onready var wave_label := get_parent().get_node("ui/WaveLabel")
 @onready var spawn_points := get_tree().get_nodes_in_group("spawn point")
 
 func _ready():
+	$"../bgm".play()
 	await get_tree().create_timer(3).timeout
 	start_next_wave()
 func get_random_enemy():
@@ -59,13 +59,17 @@ func start_next_wave():
 	enemies_alive = enemies_per_wave
 	available_spawns = spawn_points.duplicate()
 	spawn_food()
-	if current_wave % 5 == 0:
-		fade_out_music(2)
-		$"../AudioStreamPlayer".play()
+	var is_boss_wave = current_wave % 5 == 0
+	if is_boss_wave and not last_wave_was_boss:
+		switch_music($"../bgm",$"../bmp",0.5)
+	elif not is_boss_wave and last_wave_was_boss:
+		switch_music($"../bmp",$"../bgm",0.5)
+	last_wave_was_boss = is_boss_wave
+	if is_boss_wave:
+		enemies_alive = 1
 		spawn_boss()
 	else:
-		fade_out_boss_music(2)
-		$"../AudioStreamPlayer2".play()
+		enemies_alive = enemies_per_wave
 		for i in enemies_alive:
 			if available_spawns.is_empty():
 				break 
@@ -108,7 +112,7 @@ func _on_enemy_died():
 		despawn_food()
 		for storm in get_tree().get_nodes_in_group("storm"):
 			storm.reset_storm()
-		await get_tree().create_timer(time_between_waves).timeout
+		
 		start_next_wave()
 
 func despawn_food():
@@ -120,14 +124,18 @@ func _on_boss_died():
 	despawn_food()
 	for storm in get_tree().get_nodes_in_group("storm"):
 		storm.reset_storm()
-	await get_tree().create_timer(time_between_waves).timeout
 	start_next_wave()
-func fade_out_boss_music(duration):
+
+func switch_music(from_player: AudioStreamPlayer, to_player: AudioStreamPlayer, duration: float):
+	if from_player == to_player:
+		return
 	var tween = get_tree().create_tween()
-	tween.tween_property($"../AudioStreamPlayer","volume_db",-80,duration)
-	tween.tween_callback($"../AudioStreamPlayer".stop)
-	$"../AudioStreamPlayer2".play()
-func fade_out_music(duration):
-	var tween = get_tree().create_tween()
-	tween.tween_property($"../AudioStreamPlayer2","volume_db",-80,duration)
-	tween.tween_callback($"../AudioStreamPlayer2".stop)
+	tween.tween_property(from_player, "volume_db", -80, duration)
+	tween.tween_callback(func ():
+		from_player.stop()
+	)
+	tween.tween_callback(func ():
+		to_player.volume_db = -80
+		to_player.play()
+	)
+	tween.tween_property(to_player, "volume_db", -19, duration)

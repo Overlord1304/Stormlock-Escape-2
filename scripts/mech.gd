@@ -165,7 +165,7 @@ func laser_attack():
 	laser_active = true
 	laser_has_hit_player = false
 	laser_area.monitoring = true
-	
+	$LaserSound.play()
 
 	laser_ray.force_raycast_update()
 

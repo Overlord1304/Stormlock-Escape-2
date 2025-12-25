@@ -226,6 +226,7 @@ shape = SubResource("RectangleShape2D_oa1go")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_tbmy8")
+volume_db = -19.579
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="animation_finished" from="rightstorm" to="." method="_on_rightstorm_animation_finished"]

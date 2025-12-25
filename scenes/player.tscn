@@ -1,4 +1,4 @@
-[gd_scene load_steps=168 format=3 uid="uid://bl1q7wod3c3q3"]
+[gd_scene load_steps=170 format=3 uid="uid://bl1q7wod3c3q3"]
 
 [ext_resource type="Texture2D" uid="uid://f4318kvo18qa" path="res://sprites/down-attack.png" id="1_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://s3sok2cvk77f" path="res://sprites/idle-down.png" id="1_g2els"]
@@ -29,6 +29,8 @@
 [ext_resource type="Texture2D" uid="uid://oi4h3hcd5wiy" path="res://sprites/death.png" id="16_ke2ow"]
 [ext_resource type="Texture2D" uid="uid://cyf8hghkd6gka" path="res://sprites/mechdeathright.png" id="16_wqfne"]
 [ext_resource type="Texture2D" uid="uid://be3ij0v0nrgw8" path="res://sprites/mechdeathup.png" id="17_wnwbv"]
+[ext_resource type="AudioStream" uid="uid://dp4h6r1qmx70w" path="res://music/464695__branndybottle__sandwalking_step2.wav" id="30_wqfne"]
+[ext_resource type="AudioStream" uid="uid://bk8uuslk46mmb" path="res://music/attack_sound.wav" id="31_wnwbv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ujl30"]
 atlas = ExtResource("1_3v2ag")
@@ -1137,6 +1139,7 @@ position = Vector2(5, 6)
 shape = SubResource("RectangleShape2D_g2els")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
 limit_left = 0
 limit_top = -10
 limit_right = 1100
@@ -1176,6 +1179,13 @@ shape = SubResource("RectangleShape2D_ke2ow")
 [node name="up" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -3)
 shape = SubResource("RectangleShape2D_ke2ow")
+
+[node name="footsteps" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("30_wqfne")
+volume_db = -11.281
+
+[node name="attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("31_wnwbv")
 
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
