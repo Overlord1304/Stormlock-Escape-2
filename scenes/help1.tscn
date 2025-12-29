@@ -1,0 +1,157 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl64ng1whfks7"]
+
+[ext_resource type="Script" uid="uid://70qs3m164ehj" path="res://scripts/help_1.gd" id="1_hfdex"]
+[ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="1_uw5ex"]
+[ext_resource type="PackedScene" uid="uid://c2rfsvpt32ies" path="res://scenes/purpleslime.tscn" id="2_nlygy"]
+
+[node name="help1" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hfdex")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -184.0
+offset_top = 13.0
+offset_right = 184.0
+offset_bottom = 72.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_uw5ex")
+theme_override_font_sizes/font_size = 48
+text = "Instructions"
+
+[node name="Label2" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -518.0
+offset_top = 124.0
+offset_right = -150.0
+offset_bottom = 183.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_uw5ex")
+theme_override_font_sizes/font_size = 48
+text = "Controls:"
+
+[node name="Label3" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -518.0
+offset_top = 201.0
+offset_right = 378.0
+offset_bottom = 260.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_uw5ex")
+theme_override_font_sizes/font_size = 32
+text = "• Arrow Keys or WASD to move"
+
+[node name="Label4" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -518.0
+offset_top = 245.0
+offset_right = 378.0
+offset_bottom = 304.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_uw5ex")
+theme_override_font_sizes/font_size = 32
+text = "• X to attack"
+
+[node name="Label5" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -518.5
+offset_top = 306.0
+offset_right = -145.5
+offset_bottom = 365.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_uw5ex")
+theme_override_font_sizes/font_size = 48
+text = "How to Play:"
+
+[node name="Label6" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -518.0
+offset_top = 379.0
+offset_right = 378.0
+offset_bottom = 438.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_uw5ex")
+theme_override_font_sizes/font_size = 32
+text = "• Clear all enemies in a wave to progess
+ to the next one"
+
+[node name="Label7" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -518.0
+offset_top = 467.0
+offset_right = 378.0
+offset_bottom = 550.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_uw5ex")
+theme_override_font_sizes/font_size = 32
+text = "• The storm is closing in every wave, so 
+you must kill the enemies before you are 
+cornered"
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 988.0
+offset_top = 577.0
+offset_right = 1123.0
+offset_bottom = 627.0
+theme_override_fonts/font = ExtResource("1_uw5ex")
+text = "Next Page"
+
+[node name="Button2" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 24.0
+offset_right = 240.0
+offset_bottom = 74.0
+theme_override_fonts/font = ExtResource("1_uw5ex")
+text = "Back To Main Menu"
+
+[node name="CharacterBody2D" parent="Panel" instance=ExtResource("2_nlygy")]
+position = Vector2(493, 339)
+scale = Vector2(3, 3)
+
+[connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="Panel/Button2" to="." method="_on_button_2_button_down"]

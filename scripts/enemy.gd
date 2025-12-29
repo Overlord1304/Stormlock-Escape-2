@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var nav_agent = $NavigationAgent2D
 
-# ------------------ MOVEMENT ------------------
+
 var speed := 60.0
 var idle_speed := 40.0
 var walk_time := 3.0
@@ -11,21 +11,20 @@ var idle_direction := 1
 var idle_timer := 0.0
 var idle_walking := true
 
-# ------------------ STATES ------------------
+
 var player_chase := false
 var force_idle := false
 var storm: Area2D = null
 var player: Node2D = null
 var is_dead := false
 
-# ------------------ COMBAT ------------------
+
 var health := 80
 var player_inattack_zone := false
 var can_take_damage := true
 
 signal died
 
-# =========================================================
 func _physics_process(delta):
 	update_health()
 	deal_with_damage()
@@ -35,20 +34,19 @@ func _physics_process(delta):
 
 	var desired_velocity := Vector2.ZERO
 
-	# -------- PRIORITY 1: STORM AVOID --------
 	if storm and is_instance_valid(storm):
 		var away_dir = (global_position - storm.global_position).normalized()
 		nav_agent.target_position = global_position + away_dir * 500
 
-	# -------- PRIORITY 2: PLAYER CHASE --------
+	
 	elif player_chase and is_instance_valid(player):
 		nav_agent.target_position = player.global_position
 
-	# -------- PRIORITY 3: IDLE --------
+	
 	else:
 		idle_timer += delta
 
-		if idle_walking:
+		if idle_walking and get_tree().current_scene.name != "help1":
 			force_idle = false
 			desired_velocity.x = idle_speed * idle_direction
 
@@ -66,7 +64,7 @@ func _physics_process(delta):
 				idle_direction *= -1
 				force_idle = false
 
-	# -------- NAVIGATION MOVEMENT --------
+	
 	if not nav_agent.is_navigation_finished():
 		var next_point = nav_agent.get_next_path_position()
 		var direction = (next_point - global_position).normalized()
@@ -80,7 +78,7 @@ func _physics_process(delta):
 
 		desired_velocity = direction * final_speed
 
-	# -------- FORCE IDLE (ONLY WHEN NOT CHASING) --------
+	
 	if force_idle and not player_chase and storm == null:
 		velocity.x = 0
 
@@ -88,15 +86,14 @@ func _physics_process(delta):
 	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
 	move_and_slide()
 
-	# -------- ANIMATIONS --------
+	
 	if velocity.length() > 5:
 		$AnimatedSprite2D.play("move")
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	else:
 		$AnimatedSprite2D.play("idle")
 
-# =========================================================
-# PLAYER DETECTION
+
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("player"):
 		player = body
@@ -110,8 +107,7 @@ func _on_area_2d_body_exited(body):
 		player = null
 		player_chase = false
 
-# =========================================================
-# COMBAT
+
 func _on_hitbox_body_entered(body: Node2D):
 	if body.is_in_group("player"):
 		player_inattack_zone = true
@@ -133,15 +129,13 @@ func deal_with_damage():
 func _on_take_damage_cooldown_timeout():
 	can_take_damage = true
 
-# =========================================================
-# HEALTH
+
 func update_health():
 	var healthbar = $healthbar
 	healthbar.value = health
 	healthbar.visible = health < 80
 
-# =========================================================
-# DEATH
+
 func die():
 	is_dead = true
 	player_chase = false
@@ -160,8 +154,7 @@ func _on_animated_sprite_2d_animation_finished():
 		died.emit()
 		queue_free()
 
-# =========================================================
-# STORM DETECTION
+
 func _on_storm_detector_area_entered(area: Area2D):
 	if area.is_in_group("storm"):
 		storm = area

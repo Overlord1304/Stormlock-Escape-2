@@ -26,3 +26,7 @@ func fade_out_music(duration):
 	var tween = get_tree().create_tween()
 	tween.tween_property($MusicPlayer, "volume_db", -80, duration)
 	tween.tween_callback($MusicPlayer.stop)
+
+
+func _on_help_button_down() -> void:
+	get_tree().change_scene_to_file("res://scenes/help1.tscn")
