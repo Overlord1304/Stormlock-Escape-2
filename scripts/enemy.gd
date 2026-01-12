@@ -109,11 +109,11 @@ func _on_area_2d_body_exited(body):
 
 
 func _on_hitbox_body_entered(body: Node2D):
-	if body.is_in_group("player"):
+	if body.has_method("player"):
 		player_inattack_zone = true
 
 func _on_hitbox_body_exited(body: Node2D):
-	if body.is_in_group("player"):
+	if body.has_method("player"):
 		player_inattack_zone = false
 
 func deal_with_damage():
@@ -162,3 +162,5 @@ func _on_storm_detector_area_entered(area: Area2D):
 func _on_storm_detector_area_exited(area: Area2D):
 	if area == storm:
 		storm = null
+func enemy():
+	pass

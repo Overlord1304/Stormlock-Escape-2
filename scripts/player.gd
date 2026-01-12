@@ -127,6 +127,7 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 			enemy_inattack_range = false
 func enemy_attack():
 	if enemy_inattack_range and enemy_attack_cooldown == true:
+		
 		health = health - 10
 		enemy_attack_cooldown = false
 		$attack_cooldown.start()
@@ -137,7 +138,7 @@ func enemy_attack():
 				die(DeathType.SLIME)
 func psb_attack():
 	if psb_inattack_range and enemy_attack_cooldown == true:
-		health = health - 20
+		health -= 20
 		enemy_attack_cooldown = false
 		$attack_cooldown.start()
 		if health <= 0:
