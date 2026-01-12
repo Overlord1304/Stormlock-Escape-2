@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=3 uid="uid://byrtlov371u"]
+
+[ext_resource type="Script" uid="uid://cl8hpn1rsbyd1" path="res://scripts/dialogue.gd" id="1_jwyou"]
+[ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="2_3n4vj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3n4vj"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfpow"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fyky8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_led2e"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jwyou")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.19215687, 0.19215687, 0.19215687, 0.6745098)
+
+[node name="Panel" type="Panel" parent="."]
+z_index = 3
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -271.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3n4vj")
+
+[node name="DialogueText" type="Label" parent="Panel"]
+z_index = 14
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -546.0
+offset_top = -105.5
+offset_right = 546.0
+offset_bottom = 105.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_3n4vj")
+theme_override_font_sizes/font_size = 32
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="Panel"]
+z_index = 5
+layout_mode = 0
+offset_right = 1157.0
+offset_bottom = 272.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_bfpow")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fyky8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_led2e")
+
+[connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]

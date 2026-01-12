@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cnja45pmji5h8"]
+[gd_scene load_steps=31 format=3 uid="uid://cnja45pmji5h8"]
 
 [ext_resource type="Script" uid="uid://2ku2tbmetn6s" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="4_8ln24"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d3qqreh404bjs" path="res://scenes/mb.tscn" id="7_oa1go"]
 [ext_resource type="Texture2D" uid="uid://clyau2naeyw2w" path="res://sprites/Sprite-0001.png" id="8_jk1qb"]
 [ext_resource type="AudioStream" uid="uid://briocdocfydn" path="res://music/bgse2.ogg" id="8_tbmy8"]
+[ext_resource type="PackedScene" uid="uid://byrtlov371u" path="res://scenes/dialogue.tscn" id="9_jk1qb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jk1qb"]
 bg_color = Color(0, 0, 0, 1)
@@ -292,6 +293,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_jk1qb")
 icon = ExtResource("8_jk1qb")
 icon_alignment = 1
 expand_icon = true
+
+[node name="Control" parent="." instance=ExtResource("9_jk1qb")]
+visible = false
+layout_mode = 1
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="animation_finished" from="rightstorm" to="." method="_on_rightstorm_animation_finished"]

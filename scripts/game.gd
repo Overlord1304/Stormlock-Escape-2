@@ -23,9 +23,9 @@ func _process(delta) -> void:
 			save_high_score()
 			has_saved = true
 func load_high_score():
-	var save_path = "user://saves.save"
-	if FileAccess.file_exists(save_path):
-		var file = FileAccess.open(save_path,FileAccess.READ)
+	var high_score_saves = "user://high_score_saves.save"
+	if FileAccess.file_exists(high_score_saves):
+		var file = FileAccess.open(high_score_saves,FileAccess.READ)
 		Global.high_score = int(file.get_as_text())
 		file.close()
 
@@ -34,8 +34,8 @@ func check_high_score():
 		Global.high_score = Global.score
 		
 func save_high_score():
-	var save_path = "user://saves.save"
-	var file = FileAccess.open(save_path,FileAccess.WRITE)
+	var high_score_saves = "user://high_score_saves.save"
+	var file = FileAccess.open(high_score_saves,FileAccess.WRITE)
 	file.store_string(str(Global.high_score))
 	file.close()
 func start_countdown():
@@ -51,3 +51,7 @@ func start_countdown():
 
 	player.can_move = true
 	Global.storm_can_move = true
+
+
+func _on_timer_lightning_timeout() -> void:
+	player.speed = 100

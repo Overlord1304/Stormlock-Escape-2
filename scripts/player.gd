@@ -109,9 +109,6 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 				mech = body
 				
 			enemy_inattack_range = true
-
-
-
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	if body.has_method("enemy"):
 		if body.has_method("start_charge"):
@@ -214,3 +211,6 @@ func die(death_type: DeathType):
 func on_food_collected() -> void:
 	health += 50
 	update_health()
+func on_lightning_collected():
+	speed += 100
+	$"../TimerLightning".start()

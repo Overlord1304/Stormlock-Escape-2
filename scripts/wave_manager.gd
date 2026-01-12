@@ -8,6 +8,7 @@ extends Node
 	{"m": preload("res://scenes/mech.tscn")}
 ]
 @export var food_scene: PackedScene
+@export var lightning_scene: PackedScene
 @export var boss_scenes = [
 	{"psb": preload("res://scenes/purpleslimeboss.tscn")},
 	{"cb": preload("res://scenes/crabboss.tscn")},
@@ -17,6 +18,7 @@ extends Node
 @export var food_per_wave = 3
 var current_wave := 0
 var enemies_alive
+var lightning_spawned = false
 var last_wave_was_boss = false
 var available_spawns: Array = []
 var spawned_food: Array = []
@@ -54,11 +56,13 @@ func get_random_boss():
 	elif current_wave >= 15:
 		return boss_scenes[2]["mb"]
 func start_next_wave():
+	lightning_spawned = false
 	current_wave += 1
 	wave_label.text = "Wave " + str(current_wave)
 	enemies_alive = enemies_per_wave
 	available_spawns = spawn_points.duplicate()
 	spawn_food()
+	spawn_lightning()
 	var is_boss_wave = current_wave % 5 == 0
 	if is_boss_wave and not last_wave_was_boss:
 		switch_music($"../bgm",$"../bmp",0.5)
@@ -105,6 +109,17 @@ func spawn_boss():
 	boss.global_position = spawn.global_position
 	get_parent().add_child(boss)
 	boss.died.connect(_on_boss_died)
+func spawn_lightning():
+	if lightning_spawned:
+		return
+	if available_spawns.is_empty():
+		return
+	var spawn = available_spawns.pick_random()
+	available_spawns.erase(spawn)
+	var lightning = lightning_scene.instantiate()
+	lightning.global_position = spawn.global_position
+	get_parent().add_child(lightning)
+	lightning_spawned = true
 func _on_enemy_died():
 	enemies_alive -= 1
 
