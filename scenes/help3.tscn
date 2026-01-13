@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://sfg8uhr3sxb1"]
+[gd_scene load_steps=4 format=3 uid="uid://sfg8uhr3sxb1"]
 
 [ext_resource type="Script" uid="uid://2srdfgpkh50p" path="res://scripts/help_3.gd" id="1_atu76"]
 [ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="2_1j7yx"]
-[ext_resource type="PackedScene" uid="uid://conhi1a8il2xk" path="res://scenes/food.tscn" id="3_w2br5"]
-[ext_resource type="PackedScene" uid="uid://d3qqreh404bjs" path="res://scenes/mb.tscn" id="4_58140"]
+[ext_resource type="PackedScene" uid="uid://b3qrs33t846vt" path="res://scenes/lightning.tscn" id="3_exc4v"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -52,7 +51,7 @@ grow_horizontal = 2
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 48
-text = "Food:"
+text = "Buffs:"
 
 [node name="Label3" type="Label" parent="Panel"]
 layout_mode = 1
@@ -67,37 +66,22 @@ grow_horizontal = 2
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
-text = "• There is food scattered around the map"
+text = "• 1 of each buff spawn every round"
 
 [node name="Label4" type="Label" parent="Panel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -518.0
+offset_left = -517.0
 offset_top = 245.0
-offset_right = 378.0
+offset_right = 387.0
 offset_bottom = 304.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
-text = "• Each heals 50 health(Max health is 100)"
-
-[node name="Label5" type="Label" parent="Panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -518.5
-offset_top = 306.0
-offset_right = -145.5
-offset_bottom = 365.0
-grow_horizontal = 2
-theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("2_1j7yx")
-theme_override_font_sizes/font_size = 48
-text = "Bosses:"
+text = "• Lightning increases player speed by 100%"
 
 [node name="Label6" type="Label" parent="Panel"]
 layout_mode = 1
@@ -105,15 +89,14 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -518.0
-offset_top = 379.0
+offset_top = 295.0
 offset_right = 378.0
-offset_bottom = 438.0
+offset_bottom = 378.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
-text = "• Enemies get harder as the waves 
-increase"
+text = "• Sword increases damage by 100%"
 
 [node name="Label7" type="Label" parent="Panel"]
 layout_mode = 1
@@ -121,15 +104,15 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -518.0
-offset_top = 467.0
-offset_right = 378.0
-offset_bottom = 550.0
+offset_top = 346.0
+offset_right = 619.0
+offset_bottom = 429.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
-text = "• Bosses spawn every 5 waves, and they 
-give more score :D"
+text = "• Shield gives invincibility against enemies
+(not against storm)"
 
 [node name="Button" type="Button" parent="Panel"]
 layout_mode = 0
@@ -140,14 +123,6 @@ offset_bottom = 627.0
 theme_override_fonts/font = ExtResource("2_1j7yx")
 text = "Previous Page"
 
-[node name="Area2D" parent="Panel" instance=ExtResource("3_w2br5")]
-position = Vector2(267, 151)
-scale = Vector2(4, 4)
-
-[node name="CharacterBody2D2" parent="Panel" instance=ExtResource("4_58140")]
-position = Vector2(355, 336)
-scale = Vector2(2, 2)
-
 [node name="Button2" type="Button" parent="Panel"]
 layout_mode = 0
 offset_left = 39.0
@@ -156,6 +131,25 @@ offset_right = 240.0
 offset_bottom = 74.0
 theme_override_fonts/font = ExtResource("2_1j7yx")
 text = "Back To Main Menu"
+
+[node name="Label8" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -518.0
+offset_top = 437.0
+offset_right = 619.0
+offset_bottom = 520.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_1j7yx")
+theme_override_font_sizes/font_size = 32
+text = "• Buffs last 10 seconds."
+
+[node name="Area2D" parent="Panel" instance=ExtResource("3_exc4v")]
+position = Vector2(274, 155)
+scale = Vector2(3, 3)
 
 [connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]
 [connection signal="button_down" from="Panel/Button2" to="." method="_on_button_2_button_down"]

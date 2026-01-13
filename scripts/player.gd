@@ -212,7 +212,7 @@ func on_food_collected() -> void:
 	health += 50
 	update_health()
 func on_lightning_collected():
-	$"../ui/lightning".show()
+	$"../ui/lightning".reset_and_show()
 	if Global.damage_buff:
 		$"../ui/sword".hide()
 	if Global.shield_buff:
@@ -220,7 +220,7 @@ func on_lightning_collected():
 	speed += 100
 	$"../TimerLightning".start()
 func on_damage_collected():
-	$"../ui/sword".show()
+	$"../ui/sword".reset_and_show()
 	if speed > 100:
 		$"../ui/lightning".hide()
 	if Global.shield_buff:
@@ -232,7 +232,7 @@ func on_shield_collected():
 		$"../ui/sword".hide()
 	if speed > 100:
 		$"../ui/lightning".hide()
-	$"../ui/shield".show()
+	$"../ui/shield".reset_and_show()
 	Global.shield_buff = true
 	$"../TimerShield".start()
 	

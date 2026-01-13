@@ -217,28 +217,6 @@ z_as_relative = false
 tile_map_data = PackedByteArray("AAAMAA4AAAAAAAMAAAAMAA8AAAAAAAQAAAAVAAYAAAAAAAMAAAAVAAcAAAAAAAQAAAAMAAYAAAAAAAMAAAAMAAcAAAAAAAQAAAAEABMAAAAAAAMAAAAEABQAAAAAAAQAAAAqAAsAAAAAAAMAAAAqAAwAAAAAAAQAAAAkAAgAAAAAAAMAAAAkAAkAAAAAAAQAAAA2ABMAAAAAAAMAAAA2ABQAAAAAAAQAAAAUACUAAAAEAAAAAAAUACYAAAAEAAEAAAA1AB8AAAAAAAMAAAA1ACAAAAAAAAQAAAALABgAAAAAAAMAAAALABkAAAAAAAQAAAAFACEAAAAAAAMAAAAFACIAAAAAAAQAAABFACAAAAAAAAMAAABFACEAAAAAAAQAAAA/ABkAAAAAAAMAAAA/ABoAAAAAAAQAAABDAAkAAAAAAAMAAABDAAoAAAAAAAQAAAA4AAcAAAAAAAMAAAA4AAgAAAAAAAQAAAAsAB0AAAAAAAMAAAAsAB4AAAAAAAQAAAAfACIAAAAAAAMAAAAfACMAAAAAAAQAAAAvACQAAAAAAAMAAAAvACUAAAAAAAQAAAAvAAIAAAAAAAMAAAAvAAMAAAAAAAQAAAA2ACMAAAABAAQAAAAbABoAAAABAAQAAAASACAAAAABAAQAAAAGACYAAAABAAQAAAADABgAAAABAAQAAAAGAAwAAAABAAQAAAA9ACMAAAABAAQAAAA3ABsAAAABAAQAAAAwABgAAAABAAQAAAAuAA8AAAABAAQAAAA5ABAAAAABAAQAAABBAAMAAAABAAQAAAA5ACMAAAADAAIAAAA5ACQAAAADAAMAAAAlACQAAAADAAIAAAAlACUAAAADAAMAAAALAB4AAAADAAIAAAALAB8AAAADAAMAAAAHAAQAAAADAAIAAAAHAAUAAAADAAMAAAAdAAIAAAADAAIAAAAdAAMAAAADAAMAAAA+AAgAAAADAAIAAAA+AAkAAAADAAMAAAACACQAAAACAAAAAAAEAB0AAAACAAAAAAAyAB8AAAACAAAAAAAxAAoAAAACAAAAAAAnAAQAAAACAAAAAAA+ACAAAAADAAAAAAAPACUAAAADAAAAAAAYACQAAAADAAAAAAAiACAAAAADAAAAAAA4ABwAAAADAAAAAABCABQAAAADAAAAAAA5AAEAAAADAAAAAAAyABoAAAAEAAAAAAAyABsAAAAEAAEAAAAQABsAAAAEAAAAAAAQABwAAAAEAAEAAAACAAYAAAAEAAAAAAACAAcAAAAEAAEAAAAvAAUAAAAEAAAAAAAvAAYAAAAEAAEAAAA+AAwAAAAEAAAAAAA+AA0AAAAEAAEAAAAUABIAAAAEAAAAAAAUABMAAAAEAAEAAAAmABQAAAAEAAAAAAAmABUAAAAEAAEAAAAWAAsAAAAEAAAAAAAWAAwAAAAEAAEAAAAYABYAAAACAAAAAAAjABIAAAACAAAAAAATAA4AAAACAAAAAAAhAA0AAAACAAAAAAA=")
 tile_set = SubResource("TileSet_jyhfs")
 
-[node name="storm" type="Node2D" parent="."]
-z_index = -1
-
-[node name="CharacterBody2D" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
-position = Vector2(-1264, 487.00003)
-scale = Vector2(10.5, 10.5)
-
-[node name="CharacterBody2D2" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
-position = Vector2(-1273, 152)
-scale = Vector2(10.5, 10.5)
-
-[node name="CharacterBody2D3" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
-position = Vector2(2387, 152.00009)
-rotation = -3.1415925
-scale = Vector2(10.5, 10.5)
-
-[node name="CharacterBody2D4" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
-z_index = 1
-position = Vector2(2396, 487.00012)
-rotation = -3.1415925
-scale = Vector2(10.5, 10.5)
-
 [node name="collisions" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="collisions"]
@@ -754,6 +732,28 @@ wait_time = 10.0
 
 [node name="TimerShield" type="Timer" parent="."]
 wait_time = 10.0
+
+[node name="storm" type="Node2D" parent="."]
+z_index = -1
+
+[node name="CharacterBody2D" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
+position = Vector2(-1264, 487.00003)
+scale = Vector2(10.5, 10.5)
+
+[node name="CharacterBody2D2" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
+position = Vector2(-1273, 152)
+scale = Vector2(10.5, 10.5)
+
+[node name="CharacterBody2D3" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
+position = Vector2(2387, 152.00009)
+rotation = -3.1415925
+scale = Vector2(10.5, 10.5)
+
+[node name="CharacterBody2D4" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
+z_index = 15
+position = Vector2(2396, 487.00012)
+rotation = -3.1415925
+scale = Vector2(10.5, 10.5)
 
 [connection signal="timeout" from="TimerLightning" to="." method="_on_timer_lightning_timeout"]
 [connection signal="timeout" from="TimerDamage" to="." method="_on_timer_damage_timeout"]
