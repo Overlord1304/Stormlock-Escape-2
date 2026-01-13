@@ -55,3 +55,11 @@ func start_countdown():
 
 func _on_timer_lightning_timeout() -> void:
 	player.speed = 100
+
+
+func _on_timer_damage_timeout() -> void:
+	Global.damage_buff = false
+
+
+func _on_timer_shield_timeout() -> void:
+	Global.shield_buff = true

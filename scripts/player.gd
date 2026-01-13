@@ -123,7 +123,7 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 				
 			enemy_inattack_range = false
 func enemy_attack():
-	if enemy_inattack_range and enemy_attack_cooldown == true:
+	if enemy_inattack_range and !Global.shield_buff and enemy_attack_cooldown:
 		
 		health = health - 10
 		enemy_attack_cooldown = false
@@ -214,3 +214,10 @@ func on_food_collected() -> void:
 func on_lightning_collected():
 	speed += 100
 	$"../TimerLightning".start()
+func on_damage_collected():
+	Global.damage_buff = true
+	$"../TimerDamage".start()
+func on_shield_collected():
+	Global.shield_buff = true
+	$"../TimerShield".start()
+	

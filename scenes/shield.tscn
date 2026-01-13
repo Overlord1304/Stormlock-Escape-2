@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://brbla1jfymqal"]
+
+[ext_resource type="Script" uid="uid://bafmtbxipm75e" path="res://scripts/shield.gd" id="1_ohv3a"]
+[ext_resource type="Texture2D" uid="uid://doudmwxhb4ep" path="res://sprites/shield.png" id="2_ohv3a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3gf5"]
+atlas = ExtResource("2_ohv3a")
+region = Rect2(0, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsp1a"]
+atlas = ExtResource("2_ohv3a")
+region = Rect2(160, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvu10"]
+atlas = ExtResource("2_ohv3a")
+region = Rect2(320, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbtow"]
+atlas = ExtResource("2_ohv3a")
+region = Rect2(480, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tf5mt"]
+atlas = ExtResource("2_ohv3a")
+region = Rect2(640, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xnywj"]
+atlas = ExtResource("2_ohv3a")
+region = Rect2(800, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkhj2"]
+atlas = ExtResource("2_ohv3a")
+region = Rect2(960, 0, 160, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ufjn6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3gf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsp1a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvu10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbtow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tf5mt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xnywj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkhj2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.5
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_je4yw"]
+radius = 21.0
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_ohv3a")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.4843478, 0.56249493)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_ufjn6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_je4yw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cu5xwpo5hmbc8"]
+[gd_scene load_steps=5 format=3 uid="uid://sfg8uhr3sxb1"]
 
-[ext_resource type="Script" uid="uid://jsjlqwrdahg0" path="res://scripts/help_2.gd" id="1_5plv3"]
-[ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="1_yrody"]
-[ext_resource type="PackedScene" uid="uid://conhi1a8il2xk" path="res://scenes/food.tscn" id="2_sr46x"]
-[ext_resource type="PackedScene" uid="uid://d3qqreh404bjs" path="res://scenes/mb.tscn" id="3_5plv3"]
+[ext_resource type="Script" uid="uid://2srdfgpkh50p" path="res://scripts/help_3.gd" id="1_atu76"]
+[ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="2_1j7yx"]
+[ext_resource type="PackedScene" uid="uid://conhi1a8il2xk" path="res://scenes/food.tscn" id="3_w2br5"]
+[ext_resource type="PackedScene" uid="uid://d3qqreh404bjs" path="res://scenes/mb.tscn" id="4_58140"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -12,7 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_5plv3")
+script = ExtResource("1_atu76")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -35,7 +35,7 @@ offset_right = 184.0
 offset_bottom = 72.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("1_yrody")
+theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 48
 text = "Instructions"
 
@@ -50,7 +50,7 @@ offset_right = -150.0
 offset_bottom = 183.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("1_yrody")
+theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 48
 text = "Food:"
 
@@ -65,7 +65,7 @@ offset_right = 378.0
 offset_bottom = 260.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("1_yrody")
+theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
 text = "• There is food scattered around the map"
 
@@ -80,7 +80,7 @@ offset_right = 378.0
 offset_bottom = 304.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("1_yrody")
+theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
 text = "• Each heals 50 health(Max health is 100)"
 
@@ -95,7 +95,7 @@ offset_right = -145.5
 offset_bottom = 365.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("1_yrody")
+theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 48
 text = "Bosses:"
 
@@ -110,7 +110,7 @@ offset_right = 378.0
 offset_bottom = 438.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("1_yrody")
+theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
 text = "• Enemies get harder as the waves 
 increase"
@@ -126,7 +126,7 @@ offset_right = 378.0
 offset_bottom = 550.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("1_yrody")
+theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
 text = "• Bosses spawn every 5 waves, and they 
 give more score :D"
@@ -137,14 +137,14 @@ offset_left = 40.0
 offset_top = 577.0
 offset_right = 196.0
 offset_bottom = 627.0
-theme_override_fonts/font = ExtResource("1_yrody")
+theme_override_fonts/font = ExtResource("2_1j7yx")
 text = "Previous Page"
 
-[node name="Area2D" parent="Panel" instance=ExtResource("2_sr46x")]
+[node name="Area2D" parent="Panel" instance=ExtResource("3_w2br5")]
 position = Vector2(267, 151)
 scale = Vector2(4, 4)
 
-[node name="CharacterBody2D2" parent="Panel" instance=ExtResource("3_5plv3")]
+[node name="CharacterBody2D2" parent="Panel" instance=ExtResource("4_58140")]
 position = Vector2(355, 336)
 scale = Vector2(2, 2)
 
@@ -154,18 +154,8 @@ offset_left = 39.0
 offset_top = 24.0
 offset_right = 240.0
 offset_bottom = 74.0
-theme_override_fonts/font = ExtResource("1_yrody")
+theme_override_fonts/font = ExtResource("2_1j7yx")
 text = "Back To Main Menu"
-
-[node name="Button3" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 988.0
-offset_top = 577.0
-offset_right = 1123.0
-offset_bottom = 627.0
-theme_override_fonts/font = ExtResource("1_yrody")
-text = "Next Page"
 
 [connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]
 [connection signal="button_down" from="Panel/Button2" to="." method="_on_button_2_button_down"]
-[connection signal="button_down" from="Panel/Button3" to="." method="_on_button_3_button_down"]

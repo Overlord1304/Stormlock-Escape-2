@@ -107,7 +107,10 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 func deal_with_damage():
 	if player_inattack_zone and Global.player_current_attack == true:
 		if can_take_damage == true:
-			health -= 20
+			if Global.damage_buff:
+				health -= 40
+			else:
+				health -= 20
 			$take_damage_cooldown.start()
 			can_take_damage = false
 			if health <= 0 and not is_dead:

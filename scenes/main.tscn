@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://egov8gpmx4rd"]
+[gd_scene load_steps=22 format=4 uid="uid://egov8gpmx4rd"]
 
 [ext_resource type="PackedScene" uid="uid://bl1q7wod3c3q3" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://xydgxot5au6r" path="res://scripts/game.gd" id="1_tefeu"]
@@ -6,8 +6,10 @@
 [ext_resource type="Script" uid="uid://ehxsgvn1u7u0" path="res://scripts/wave_manager.gd" id="4_tbgi4"]
 [ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://b3qrs33t846vt" path="res://scenes/lightning.tscn" id="6_ya4ey"]
+[ext_resource type="PackedScene" uid="uid://brstj2180sk33" path="res://scenes/damage.tscn" id="7_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://j3ty7qfi884i" path="res://scenes/storm.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://conhi1a8il2xk" path="res://scenes/food.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://brbla1jfymqal" path="res://scenes/shield.tscn" id="8_trceg"]
 [ext_resource type="Shader" uid="uid://dcx6omaisysqm" path="res://shaders/main.gdshader" id="9_85g3d"]
 [ext_resource type="AudioStream" uid="uid://dk5668o3xg4gj" path="res://music/bossfightse2.ogg" id="9_choun"]
 [ext_resource type="AudioStream" uid="uid://uo8gvit5mie6" path="res://music/gamebgse2.ogg" id="10_choun"]
@@ -607,6 +609,8 @@ scale = Vector2(10, 10)
 script = ExtResource("4_tbgi4")
 food_scene = ExtResource("8_tipki")
 lightning_scene = ExtResource("6_ya4ey")
+damage_scene = ExtResource("7_eb6dy")
+shield_scene = ExtResource("8_trceg")
 
 [node name="ui" type="CanvasLayer" parent="."]
 
@@ -715,4 +719,12 @@ volume_db = -19.0
 [node name="TimerLightning" type="Timer" parent="."]
 wait_time = 10.0
 
+[node name="TimerDamage" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="TimerShield" type="Timer" parent="."]
+wait_time = 10.0
+
 [connection signal="timeout" from="TimerLightning" to="." method="_on_timer_lightning_timeout"]
+[connection signal="timeout" from="TimerDamage" to="." method="_on_timer_damage_timeout"]
+[connection signal="timeout" from="TimerShield" to="." method="_on_timer_shield_timeout"]
