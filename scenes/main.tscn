@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://egov8gpmx4rd"]
+[gd_scene load_steps=26 format=4 uid="uid://egov8gpmx4rd"]
 
 [ext_resource type="PackedScene" uid="uid://bl1q7wod3c3q3" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://xydgxot5au6r" path="res://scripts/game.gd" id="1_tefeu"]
@@ -13,6 +13,10 @@
 [ext_resource type="Shader" uid="uid://dcx6omaisysqm" path="res://shaders/main.gdshader" id="9_85g3d"]
 [ext_resource type="AudioStream" uid="uid://dk5668o3xg4gj" path="res://music/bossfightse2.ogg" id="9_choun"]
 [ext_resource type="AudioStream" uid="uid://uo8gvit5mie6" path="res://music/gamebgse2.ogg" id="10_choun"]
+[ext_resource type="Texture2D" uid="uid://c44gtl02n6ln7" path="res://scenes/Shield_1_160x160.png" id="11_jbj1t"]
+[ext_resource type="Script" uid="uid://dvfdoxfjjex3r" path="res://scripts/status.gd" id="11_muem4"]
+[ext_resource type="Texture2D" uid="uid://c1ry37mlvcwqf" path="res://sprites/sword.png" id="12_muem4"]
+[ext_resource type="Texture2D" uid="uid://ct7fmtipjhvnd" path="res://sprites/lightning.png" id="14_a8y0u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
 texture = ExtResource("3_sugp2")
@@ -659,6 +663,30 @@ theme_override_colors/font_outline_color = Color(1, 0.40392157, 0, 1)
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("5_tbgi4")
 theme_override_font_sizes/font_size = 25
+
+[node name="lightning" type="Sprite2D" parent="ui"]
+visible = false
+z_index = 15
+position = Vector2(46.00002, 610.00006)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("14_a8y0u")
+script = ExtResource("11_muem4")
+
+[node name="shield" type="Sprite2D" parent="ui"]
+visible = false
+z_index = 15
+position = Vector2(45.000008, 612.00006)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_jbj1t")
+script = ExtResource("11_muem4")
+
+[node name="sword" type="Sprite2D" parent="ui"]
+visible = false
+z_index = 16
+position = Vector2(43.00001, 612)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("12_muem4")
+script = ExtResource("11_muem4")
 
 [node name="storm" type="Node2D" parent="."]
 

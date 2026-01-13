@@ -55,11 +55,13 @@ func start_countdown():
 
 func _on_timer_lightning_timeout() -> void:
 	player.speed = 100
-
+	$ui/lightning.fade_out()
+	
 
 func _on_timer_damage_timeout() -> void:
 	Global.damage_buff = false
-
+	$ui/sword.fade_out()
 
 func _on_timer_shield_timeout() -> void:
-	Global.shield_buff = true
+	Global.shield_buff = false
+	$ui/shield.fade_out()
