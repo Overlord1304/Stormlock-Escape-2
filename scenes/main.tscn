@@ -212,9 +212,32 @@ tile_map_data = PackedByteArray("AAD/////AAAAAAEAAAD//wAAAAAAAAEAAAD//wEAAAAAAAE
 tile_set = SubResource("TileSet_tbgi4")
 
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]
-z_index = 1
+z_index = 2
+z_as_relative = false
 tile_map_data = PackedByteArray("AAAMAA4AAAAAAAMAAAAMAA8AAAAAAAQAAAAVAAYAAAAAAAMAAAAVAAcAAAAAAAQAAAAMAAYAAAAAAAMAAAAMAAcAAAAAAAQAAAAEABMAAAAAAAMAAAAEABQAAAAAAAQAAAAqAAsAAAAAAAMAAAAqAAwAAAAAAAQAAAAkAAgAAAAAAAMAAAAkAAkAAAAAAAQAAAA2ABMAAAAAAAMAAAA2ABQAAAAAAAQAAAAUACUAAAAEAAAAAAAUACYAAAAEAAEAAAA1AB8AAAAAAAMAAAA1ACAAAAAAAAQAAAALABgAAAAAAAMAAAALABkAAAAAAAQAAAAFACEAAAAAAAMAAAAFACIAAAAAAAQAAABFACAAAAAAAAMAAABFACEAAAAAAAQAAAA/ABkAAAAAAAMAAAA/ABoAAAAAAAQAAABDAAkAAAAAAAMAAABDAAoAAAAAAAQAAAA4AAcAAAAAAAMAAAA4AAgAAAAAAAQAAAAsAB0AAAAAAAMAAAAsAB4AAAAAAAQAAAAfACIAAAAAAAMAAAAfACMAAAAAAAQAAAAvACQAAAAAAAMAAAAvACUAAAAAAAQAAAAvAAIAAAAAAAMAAAAvAAMAAAAAAAQAAAA2ACMAAAABAAQAAAAbABoAAAABAAQAAAASACAAAAABAAQAAAAGACYAAAABAAQAAAADABgAAAABAAQAAAAGAAwAAAABAAQAAAA9ACMAAAABAAQAAAA3ABsAAAABAAQAAAAwABgAAAABAAQAAAAuAA8AAAABAAQAAAA5ABAAAAABAAQAAABBAAMAAAABAAQAAAA5ACMAAAADAAIAAAA5ACQAAAADAAMAAAAlACQAAAADAAIAAAAlACUAAAADAAMAAAALAB4AAAADAAIAAAALAB8AAAADAAMAAAAHAAQAAAADAAIAAAAHAAUAAAADAAMAAAAdAAIAAAADAAIAAAAdAAMAAAADAAMAAAA+AAgAAAADAAIAAAA+AAkAAAADAAMAAAACACQAAAACAAAAAAAEAB0AAAACAAAAAAAyAB8AAAACAAAAAAAxAAoAAAACAAAAAAAnAAQAAAACAAAAAAA+ACAAAAADAAAAAAAPACUAAAADAAAAAAAYACQAAAADAAAAAAAiACAAAAADAAAAAAA4ABwAAAADAAAAAABCABQAAAADAAAAAAA5AAEAAAADAAAAAAAyABoAAAAEAAAAAAAyABsAAAAEAAEAAAAQABsAAAAEAAAAAAAQABwAAAAEAAEAAAACAAYAAAAEAAAAAAACAAcAAAAEAAEAAAAvAAUAAAAEAAAAAAAvAAYAAAAEAAEAAAA+AAwAAAAEAAAAAAA+AA0AAAAEAAEAAAAUABIAAAAEAAAAAAAUABMAAAAEAAEAAAAmABQAAAAEAAAAAAAmABUAAAAEAAEAAAAWAAsAAAAEAAAAAAAWAAwAAAAEAAEAAAAYABYAAAACAAAAAAAjABIAAAACAAAAAAATAA4AAAACAAAAAAAhAA0AAAACAAAAAAA=")
 tile_set = SubResource("TileSet_jyhfs")
+
+[node name="storm" type="Node2D" parent="."]
+z_index = -1
+
+[node name="CharacterBody2D" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
+position = Vector2(-1264, 487.00003)
+scale = Vector2(10.5, 10.5)
+
+[node name="CharacterBody2D2" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
+position = Vector2(-1273, 152)
+scale = Vector2(10.5, 10.5)
+
+[node name="CharacterBody2D3" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
+position = Vector2(2387, 152.00009)
+rotation = -3.1415925
+scale = Vector2(10.5, 10.5)
+
+[node name="CharacterBody2D4" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
+z_index = 1
+position = Vector2(2396, 487.00012)
+rotation = -3.1415925
+scale = Vector2(10.5, 10.5)
 
 [node name="collisions" type="StaticBody2D" parent="."]
 
@@ -687,27 +710,6 @@ position = Vector2(43.00001, 612)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("12_muem4")
 script = ExtResource("11_muem4")
-
-[node name="storm" type="Node2D" parent="."]
-
-[node name="CharacterBody2D" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
-position = Vector2(-1264, 487.00003)
-scale = Vector2(10.5, 10.5)
-
-[node name="CharacterBody2D2" parent="storm" groups=["storm left"] instance=ExtResource("7_o6xl0")]
-position = Vector2(-1273, 152)
-scale = Vector2(10.5, 10.5)
-
-[node name="CharacterBody2D3" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
-position = Vector2(2387, 152.00009)
-rotation = -3.1415925
-scale = Vector2(10.5, 10.5)
-
-[node name="CharacterBody2D4" parent="storm" groups=["storm right"] instance=ExtResource("7_o6xl0")]
-z_index = 1
-position = Vector2(2396, 487.00012)
-rotation = -3.1415925
-scale = Vector2(10.5, 10.5)
 
 [node name="boundaries" type="StaticBody2D" parent="."]
 

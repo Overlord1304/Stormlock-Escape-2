@@ -54,7 +54,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gr72"]
-size = Vector2(249, 31)
+size = Vector2(252, 31)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2jbef"]
 size = Vector2(318, 32)
@@ -72,7 +72,7 @@ sprite_frames = SubResource("SpriteFrames_h8hcv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 z_index = 1
-position = Vector2(-3.5, 0.5)
+position = Vector2(-6, 0.5)
 shape = SubResource("RectangleShape2D_4gr72")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
