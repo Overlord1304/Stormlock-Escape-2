@@ -217,7 +217,8 @@ func on_lightning_collected():
 		$"../ui/sword".hide()
 	if Global.shield_buff:
 		$"../ui/shield".hide()
-	speed += 100
+	speed += 100 * Global.speed_upg
+	print(speed)
 	$"../TimerLightning".start()
 func on_damage_collected():
 	$"../ui/sword".reset_and_show()
@@ -226,6 +227,7 @@ func on_damage_collected():
 	if Global.shield_buff:
 		$"../ui/shield".hide()
 	Global.damage_buff = true
+	print(Global.damage_upg)
 	$"../TimerDamage".start()
 func on_shield_collected():
 	if Global.damage_buff:
@@ -234,5 +236,6 @@ func on_shield_collected():
 		$"../ui/lightning".hide()
 	$"../ui/shield".reset_and_show()
 	Global.shield_buff = true
+	print($"../TimerShield".wait_time)
 	$"../TimerShield".start()
 	

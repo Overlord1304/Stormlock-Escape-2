@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://plulwrl4qisx"]
+
+[ext_resource type="Script" uid="uid://dp75pyvrsdfgg" path="res://scripts/help_4.gd" id="1_xjajb"]
+[ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="2_i04wa"]
+[ext_resource type="PackedScene" uid="uid://brstj2180sk33" path="res://scenes/damage.tscn" id="3_i04wa"]
+
+[node name="Control" type="Control" unique_id=1447689907]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xjajb")
+
+[node name="Panel" type="Panel" parent="." unique_id=1631628861]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel" unique_id=1732861452]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -184.0
+offset_top = 13.0
+offset_right = 184.0
+offset_bottom = 72.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_i04wa")
+theme_override_font_sizes/font_size = 48
+text = "Instructions"
+
+[node name="Label2" type="Label" parent="Panel" unique_id=1961829601]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -518.0
+offset_top = 124.0
+offset_right = -150.0
+offset_bottom = 183.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_i04wa")
+theme_override_font_sizes/font_size = 48
+text = "Shop:"
+
+[node name="Label3" type="Label" parent="Panel" unique_id=1653348397]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -518.0
+offset_top = 201.0
+offset_right = 378.0
+offset_bottom = 260.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_i04wa")
+theme_override_font_sizes/font_size = 32
+text = "• Spend coins earnt from defeating 
+enemies on upgrades."
+
+[node name="Label4" type="Label" parent="Panel" unique_id=1815184512]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -517.0
+offset_top = 280.0
+offset_right = 387.0
+offset_bottom = 339.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_i04wa")
+theme_override_font_sizes/font_size = 32
+text = "• Upgrades increase buff efficiency"
+
+[node name="Button" type="Button" parent="Panel" unique_id=67723147]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 577.0
+offset_right = 196.0
+offset_bottom = 627.0
+theme_override_fonts/font = ExtResource("2_i04wa")
+text = "Previous Page"
+
+[node name="Button2" type="Button" parent="Panel" unique_id=360944654]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 24.0
+offset_right = 240.0
+offset_bottom = 74.0
+theme_override_fonts/font = ExtResource("2_i04wa")
+text = "Back To Main Menu"
+
+[node name="Area2D" parent="Panel" unique_id=1135529938 instance=ExtResource("3_i04wa")]
+position = Vector2(267, 157)
+scale = Vector2(4, 4)
+
+[connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="Panel/Button2" to="." method="_on_button_2_button_down"]

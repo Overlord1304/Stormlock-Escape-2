@@ -1,4 +1,4 @@
-[gd_scene load_steps=170 format=3 uid="uid://bl1q7wod3c3q3"]
+[gd_scene format=3 uid="uid://bl1q7wod3c3q3"]
 
 [ext_resource type="Texture2D" uid="uid://f4318kvo18qa" path="res://sprites/down-attack.png" id="1_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://s3sok2cvk77f" path="res://sprites/idle-down.png" id="1_g2els"]
@@ -1122,44 +1122,44 @@ radius = 8.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ke2ow"]
 size = Vector2(16, 2)
 
-[node name="Node2D" type="CharacterBody2D" groups=["player"]]
+[node name="Node2D" type="CharacterBody2D" unique_id=735280166 groups=["player"]]
 z_index = 2
 collision_layer = 9
 collision_mask = 9
 script = ExtResource("1_jej6c")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1452824223]
 position = Vector2(-2, 4.5)
 scale = Vector2(0.6875, 0.65625006)
 sprite_frames = SubResource("SpriteFrames_ur7pv")
 animation = &"mech_death_down"
 
-[node name="right" type="CollisionShape2D" parent="."]
+[node name="right" type="CollisionShape2D" parent="." unique_id=1262124701]
 position = Vector2(5, 6)
 shape = SubResource("RectangleShape2D_g2els")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1550222709]
 zoom = Vector2(3, 3)
 limit_left = 0
 limit_top = -10
 limit_right = 1100
 limit_bottom = 655
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="hitbox" type="Area2D" parent="." unique_id=1862968633]
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=45483380]
 position = Vector2(-3, 6)
 shape = SubResource("CircleShape2D_f1ej7")
 
-[node name="attack_cooldown" type="Timer" parent="."]
+[node name="attack_cooldown" type="Timer" parent="." unique_id=1194627294]
 wait_time = 0.5
 
-[node name="deal_attack_timer" type="Timer" parent="."]
+[node name="deal_attack_timer" type="Timer" parent="." unique_id=2061785127]
 wait_time = 0.5
 
-[node name="healthbar" type="ProgressBar" parent="."]
+[node name="healthbar" type="ProgressBar" parent="." unique_id=354655007]
 modulate = Color(0.31860414, 0.9184813, 3.85046e-07, 1)
 z_index = 40
 offset_left = -9.0
@@ -1169,23 +1169,23 @@ offset_bottom = 41.0
 scale = Vector2(0.1, 0.1)
 show_percentage = false
 
-[node name="left" type="CollisionShape2D" parent="."]
+[node name="left" type="CollisionShape2D" parent="." unique_id=409166663]
 position = Vector2(-8, 6)
 shape = SubResource("RectangleShape2D_g2els")
 
-[node name="down" type="CollisionShape2D" parent="."]
+[node name="down" type="CollisionShape2D" parent="." unique_id=298926232]
 position = Vector2(-2, 15)
 shape = SubResource("RectangleShape2D_ke2ow")
 
-[node name="up" type="CollisionShape2D" parent="."]
+[node name="up" type="CollisionShape2D" parent="." unique_id=2082639727]
 position = Vector2(-2, -3)
 shape = SubResource("RectangleShape2D_ke2ow")
 
-[node name="footsteps" type="AudioStreamPlayer" parent="."]
+[node name="footsteps" type="AudioStreamPlayer" parent="." unique_id=1955660131]
 stream = ExtResource("30_wqfne")
 volume_db = -11.281
 
-[node name="attack" type="AudioStreamPlayer" parent="."]
+[node name="attack" type="AudioStreamPlayer" parent="." unique_id=2061194931]
 stream = ExtResource("31_wnwbv")
 
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]

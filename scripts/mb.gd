@@ -24,13 +24,13 @@ var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
 var is_attacking = false
-var laser_active := false
-var laser_has_hit_player := false
+var laser_active = false
+var laser_has_hit_player = false
 var direction = 1
 var code_green = false
-var warning_facing_right: bool = false
+var warning_facing_right = false
 
-var laser_cooldown_timer: Timer
+var laser_cooldown_timer
 
 
 signal died
@@ -73,10 +73,7 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
-	
-	
-	var desired_velocity := Vector2.ZERO
-
+	var desired_velocity = Vector2.ZERO
 	if player_chase and player:
 		var dx = abs(player.global_position.x - global_position.x)
 		var dy = abs(player.global_position.y - global_position.y)
@@ -99,15 +96,14 @@ func _physics_process(delta):
 
 		if player_chase and player:
 			var dist = global_position.distance_to(player.global_position)
-			var slow_radius := 48.0
-
+			var slow_radius = 48.0
 			if dist < slow_radius:
 				var t = dist / slow_radius
 				final_speed = speed * lerp(0.8, 1.0, t)
 
 		desired_velocity = direction * final_speed
 	
-	var acceleration := 800.0
+	var acceleration = 800.0
 	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
 	move_and_slide()
 
@@ -286,7 +282,7 @@ func deal_with_damage():
 	if player_inattack_zone and Global.player_current_attack == true:
 		if can_take_damage == true:
 			if Global.damage_buff:
-				health -= 40
+				health -= 40 * Global.damage_upg
 			else:
 				health -= 20
 			$take_damage_cooldown.start()
@@ -325,7 +321,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		is_attacking = false
 
 	if is_dead and $AnimatedSprite2D.animation == "death":
-		Global.score += 20
+		Global.score += 200
+		Global.coins += 10
 		died.emit()
 		queue_free()
 

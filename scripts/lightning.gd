@@ -1,6 +1,6 @@
 extends Area2D
 
-var collected := false
+var collected = false
 
 func _ready():
 	$AnimatedSprite2D.play("default")

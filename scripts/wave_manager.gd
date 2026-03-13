@@ -1,5 +1,4 @@
 extends Node
-
 @export var enemy_scenes = [
 	{"ps": preload("res://scenes/purpleslime.tscn")},
 	{"pss": preload("res://scenes/purpleslimesmall.tscn")},
@@ -16,18 +15,18 @@ extends Node
 	{"cb": preload("res://scenes/crabboss.tscn")},
 	{"mb": preload("res://scenes/mb.tscn")}
 ]
-@export var enemies_per_wave := 7
+@export var enemies_per_wave = 7
 @export var food_per_wave = 3
-var current_wave := 0
+var current_wave = 0
 var enemies_alive
 var lightning_spawned = false
 var damage_spawned = false
 var shield_spawned = false
 var last_wave_was_boss = false
-var available_spawns: Array = []
-var spawned_food: Array = []
-@onready var wave_label := get_parent().get_node("ui/WaveLabel")
-@onready var spawn_points := get_tree().get_nodes_in_group("spawn point")
+var available_spawns= []
+var spawned_food = []
+@onready var wave_label = get_parent().get_node("ui/wave")
+@onready var spawn_points = get_tree().get_nodes_in_group("spawn point")
 
 func _ready():
 	$"../bgm".play()
@@ -171,7 +170,7 @@ func _on_boss_died():
 		storm.reset_storm()
 	start_next_wave()
 
-func switch_music(from_player: AudioStreamPlayer, to_player: AudioStreamPlayer, duration: float):
+func switch_music(from_player, to_player, duration):
 	if from_player == to_player:
 		return
 	var tween = get_tree().create_tween()

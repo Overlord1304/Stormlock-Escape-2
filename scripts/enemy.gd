@@ -3,25 +3,25 @@ extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
 
 
-var speed := 60.0
-var idle_speed := 40.0
-var walk_time := 3.0
-var idle_time := 4.0
-var idle_direction := 1
-var idle_timer := 0.0
-var idle_walking := true
+var speed = 60.0
+var idle_speed = 40.0
+var walk_time = 3.0
+var idle_time = 4.0
+var idle_direction = 1
+var idle_timer = 0.0
+var idle_walking = true
 
 
-var player_chase := false
-var force_idle := false
-var storm: Area2D = null
-var player: Node2D = null
-var is_dead := false
+var player_chase = false
+var force_idle = false
+var storm = null
+var player= null
+var is_dead = false
 
 
-var health := 80
-var player_inattack_zone := false
-var can_take_damage := true
+var health = 80
+var player_inattack_zone = false
+var can_take_damage = true
 
 signal died
 
@@ -32,7 +32,7 @@ func _physics_process(delta):
 	if is_dead:
 		return
 
-	var desired_velocity := Vector2.ZERO
+	var desired_velocity = Vector2.ZERO
 
 	if storm and is_instance_valid(storm):
 		var away_dir = (global_position - storm.global_position).normalized()
@@ -68,11 +68,11 @@ func _physics_process(delta):
 	if not nav_agent.is_navigation_finished():
 		var next_point = nav_agent.get_next_path_position()
 		var direction = (next_point - global_position).normalized()
-		var final_speed := speed
+		var final_speed = speed
 
 		if player_chase and is_instance_valid(player):
 			var dist = global_position.distance_to(player.global_position)
-			var slow_radius := 48.0
+			var slow_radius = 48.0
 			if dist < slow_radius:
 				final_speed = speed * lerp(0.8, 1.0, dist / slow_radius)
 
@@ -82,7 +82,7 @@ func _physics_process(delta):
 	if force_idle and not player_chase and storm == null:
 		velocity.x = 0
 
-	var acceleration := 800.0
+	var acceleration = 800.0
 	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
 	move_and_slide()
 
@@ -120,7 +120,7 @@ func deal_with_damage():
 	if player_inattack_zone and Global.player_current_attack:
 		if can_take_damage:
 			if Global.damage_buff:
-				health -= 40
+				health -= 40 * Global.damage_upg
 			else:
 				health -= 20
 			can_take_damage = false
@@ -153,7 +153,8 @@ func die():
 
 func _on_animated_sprite_2d_animation_finished():
 	if is_dead and $AnimatedSprite2D.animation == "death":
-		Global.score += 20
+		Global.score += 30
+		Global.coins += 15
 		died.emit()
 		queue_free()
 

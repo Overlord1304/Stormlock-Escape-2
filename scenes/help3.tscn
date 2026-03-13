@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://sfg8uhr3sxb1"]
+[gd_scene format=3 uid="uid://sfg8uhr3sxb1"]
 
 [ext_resource type="Script" uid="uid://2srdfgpkh50p" path="res://scripts/help_3.gd" id="1_atu76"]
 [ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="2_1j7yx"]
 [ext_resource type="PackedScene" uid="uid://b3qrs33t846vt" path="res://scenes/lightning.tscn" id="3_exc4v"]
 
-[node name="Control" type="Control"]
+[node name="Control" type="Control" unique_id=121547807]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_atu76")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1397285533]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,7 @@ offset_right = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="Label" type="Label" parent="Panel" unique_id=1785824760]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -38,7 +38,7 @@ theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 48
 text = "Instructions"
 
-[node name="Label2" type="Label" parent="Panel"]
+[node name="Label2" type="Label" parent="Panel" unique_id=1682306587]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -53,7 +53,7 @@ theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 48
 text = "Buffs:"
 
-[node name="Label3" type="Label" parent="Panel"]
+[node name="Label3" type="Label" parent="Panel" unique_id=1020341567]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -68,7 +68,7 @@ theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
 text = "• 1 of each buff spawn every round"
 
-[node name="Label4" type="Label" parent="Panel"]
+[node name="Label4" type="Label" parent="Panel" unique_id=675480529]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -83,7 +83,7 @@ theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
 text = "• Lightning increases player speed by 100%"
 
-[node name="Label6" type="Label" parent="Panel"]
+[node name="Label6" type="Label" parent="Panel" unique_id=2102057761]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -98,7 +98,7 @@ theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
 text = "• Sword increases damage by 100%"
 
-[node name="Label7" type="Label" parent="Panel"]
+[node name="Label7" type="Label" parent="Panel" unique_id=322885592]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -114,7 +114,7 @@ theme_override_font_sizes/font_size = 32
 text = "• Shield gives invincibility against enemies
 (not against storm)"
 
-[node name="Button" type="Button" parent="Panel"]
+[node name="Button" type="Button" parent="Panel" unique_id=208744778]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 577.0
@@ -123,7 +123,7 @@ offset_bottom = 627.0
 theme_override_fonts/font = ExtResource("2_1j7yx")
 text = "Previous Page"
 
-[node name="Button2" type="Button" parent="Panel"]
+[node name="Button2" type="Button" parent="Panel" unique_id=2032881178]
 layout_mode = 0
 offset_left = 39.0
 offset_top = 24.0
@@ -132,7 +132,7 @@ offset_bottom = 74.0
 theme_override_fonts/font = ExtResource("2_1j7yx")
 text = "Back To Main Menu"
 
-[node name="Label8" type="Label" parent="Panel"]
+[node name="Label8" type="Label" parent="Panel" unique_id=641572166]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -147,9 +147,19 @@ theme_override_fonts/font = ExtResource("2_1j7yx")
 theme_override_font_sizes/font_size = 32
 text = "• Buffs last 10 seconds."
 
-[node name="Area2D" parent="Panel" instance=ExtResource("3_exc4v")]
+[node name="Area2D" parent="Panel" unique_id=58136937 instance=ExtResource("3_exc4v")]
 position = Vector2(274, 155)
 scale = Vector2(3, 3)
 
+[node name="Button3" type="Button" parent="Panel" unique_id=548573106]
+layout_mode = 0
+offset_left = 988.0
+offset_top = 577.0
+offset_right = 1123.0
+offset_bottom = 627.0
+theme_override_fonts/font = ExtResource("2_1j7yx")
+text = "Next Page"
+
 [connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]
 [connection signal="button_down" from="Panel/Button2" to="." method="_on_button_2_button_down"]
+[connection signal="button_down" from="Panel/Button3" to="." method="_on_button_3_button_down"]

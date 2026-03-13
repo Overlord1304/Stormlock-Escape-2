@@ -46,7 +46,7 @@ func _physics_process(delta):
 		if charge_timer <= 0:
 			start_charge()
 
-	var desired_velocity := Vector2.ZERO
+	var desired_velocity = Vector2.ZERO
 
 	if player_chase and player:
 		nav_agent.target_position = player.global_position
@@ -78,14 +78,14 @@ func _physics_process(delta):
 			var direction = (next_point - global_position).normalized()
 
 			var dist = global_position.distance_to(player.global_position)
-			var slow_radius := 48.0
+			var slow_radius = 48.0
 			var final_speed = speed
 			if dist < slow_radius:
 				final_speed = speed * (dist / slow_radius)
 
 			desired_velocity = direction * final_speed
 
-	var acceleration := 800.0
+	var acceleration = 800.0
 	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
 	move_and_slide()
 
@@ -145,7 +145,7 @@ func deal_with_damage():
 	if player_inattack_zone and Global.player_current_attack == true:
 		if can_take_damage == true:
 			if Global.damage_buff:
-				health -= 40
+				health -= 40 * Global.damage_upg
 			else:
 				health -= 20
 			$take_damage_cooldown.start()
@@ -182,5 +182,6 @@ func die():
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if is_dead and $AnimatedSprite2D.animation == "death":
 		Global.score += 100
+		Global.coins += 50
 		died.emit()
 		queue_free()

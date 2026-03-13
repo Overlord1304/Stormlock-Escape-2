@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://ba5mhs4ff052l"]
+
+[ext_resource type="Script" uid="uid://dbet4vmcordqa" path="res://scripts/pause.gd" id="1_m0klm"]
+[ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="1_r8yp4"]
+[ext_resource type="Texture2D" uid="uid://df7h07smbqd0k" path="res://sprites/Sprite-0005.png" id="2_m0klm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0klm"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aicil"]
+bg_color = Color(0, 0, 0, 0.78039217)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jn4bt"]
+bg_color = Color(0, 0, 0, 0.5019608)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r1fnm"]
+
+[node name="Control" type="Control" unique_id=1792067975]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -770.0
+offset_bottom = -439.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m0klm")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=841232789]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -14.0
+offset_top = -9.0
+offset_right = 18.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.32156864, 0.32156864, 0.32156864, 0.7058824)
+
+[node name="PlayButton" type="Button" parent="." unique_id=1743394099]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28100002
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 44.65799
+offset_top = -35.5
+offset_right = 132.0
+offset_bottom = 113.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+tooltip_text = "Play!"
+theme_override_colors/font_color = Color(1, 0.6431373, 0.4745098, 1)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_r8yp4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_m0klm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aicil")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jn4bt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r1fnm")
+icon = ExtResource("2_m0klm")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button2" type="Button" parent="." unique_id=1334130236]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 117.0
+offset_bottom = 36.0
+theme_override_fonts/font = ExtResource("1_r8yp4")
+theme_override_font_sizes/font_size = 9
+text = "Back To Main Menu"
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

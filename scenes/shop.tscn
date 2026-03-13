@@ -1,0 +1,196 @@
+[gd_scene format=3 uid="uid://djvxusamfsjnl"]
+
+[ext_resource type="Script" uid="uid://074c5d3cf58i" path="res://scripts/shop.gd" id="1_8r1wq"]
+[ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="2_032fp"]
+[ext_resource type="Texture2D" uid="uid://c1ry37mlvcwqf" path="res://sprites/sword.png" id="3_032fp"]
+[ext_resource type="Texture2D" uid="uid://c44gtl02n6ln7" path="res://scenes/Shield_1_160x160.png" id="4_2fc2m"]
+[ext_resource type="Texture2D" uid="uid://ct7fmtipjhvnd" path="res://sprites/lightning.png" id="4_8r1wq"]
+[ext_resource type="Texture2D" uid="uid://bv3un6xt352qc" path="res://sprites/upgbar.png" id="4_ajxib"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6sft"]
+atlas = ExtResource("4_ajxib")
+region = Rect2(0, 0, 246, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4ofw"]
+atlas = ExtResource("4_ajxib")
+region = Rect2(246, 0, 246, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heatd"]
+atlas = ExtResource("4_ajxib")
+region = Rect2(492, 0, 246, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v8qu"]
+atlas = ExtResource("4_ajxib")
+region = Rect2(738, 0, 246, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44xle"]
+atlas = ExtResource("4_ajxib")
+region = Rect2(984, 0, 246, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24it5"]
+atlas = ExtResource("4_ajxib")
+region = Rect2(1230, 0, 246, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mqwv"]
+atlas = ExtResource("4_ajxib")
+region = Rect2(1476, 0, 246, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gobkm"]
+atlas = ExtResource("4_ajxib")
+region = Rect2(1722, 0, 246, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j14q8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6sft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4ofw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heatd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1v8qu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44xle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24it5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mqwv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gobkm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="shop" type="Control" unique_id=1620253829]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8r1wq")
+
+[node name="Panel" type="Panel" parent="." unique_id=12695494]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel" unique_id=303463024]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -184.0
+offset_top = 13.0
+offset_right = 184.0
+offset_bottom = 72.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_032fp")
+theme_override_font_sizes/font_size = 76
+text = "Shop"
+horizontal_alignment = 1
+
+[node name="Button2" type="Button" parent="Panel" unique_id=254999768]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 24.0
+offset_right = 240.0
+offset_bottom = 74.0
+theme_override_fonts/font = ExtResource("2_032fp")
+text = "Back To Main Menu"
+
+[node name="atk" type="Node2D" parent="Panel" unique_id=403566328]
+
+[node name="atksprite" type="Sprite2D" parent="Panel/atk" unique_id=1890276078]
+position = Vector2(142, 201)
+scale = Vector2(6, 6)
+texture = ExtResource("3_032fp")
+
+[node name="atkupg" type="Button" parent="Panel/atk" unique_id=1464518205]
+offset_left = 99.0
+offset_top = 270.0
+offset_right = 192.0
+offset_bottom = 306.0
+theme_override_fonts/font = ExtResource("2_032fp")
+text = "Upgrade"
+
+[node name="upgbar" type="AnimatedSprite2D" parent="Panel/atk" unique_id=1831075270]
+position = Vector2(662, 215.00002)
+scale = Vector2(3.67, 3.67)
+sprite_frames = SubResource("SpriteFrames_j14q8")
+
+[node name="def" type="Node2D" parent="Panel" unique_id=2086551901]
+
+[node name="defsprite" type="Sprite2D" parent="Panel/def" unique_id=791580571]
+position = Vector2(144, 372)
+texture = ExtResource("4_2fc2m")
+
+[node name="defupg" type="Button" parent="Panel/def" unique_id=172420448]
+offset_left = 100.0
+offset_top = 437.0
+offset_right = 193.0
+offset_bottom = 473.0
+theme_override_fonts/font = ExtResource("2_032fp")
+text = "Upgrade"
+
+[node name="upgbar" type="AnimatedSprite2D" parent="Panel/def" unique_id=1364443761]
+position = Vector2(662, 378)
+scale = Vector2(3.67, 3.67)
+sprite_frames = SubResource("SpriteFrames_j14q8")
+
+[node name="agi" type="Node2D" parent="Panel" unique_id=510999504]
+
+[node name="agisprite" type="Sprite2D" parent="Panel/agi" unique_id=971268843]
+position = Vector2(144, 535)
+scale = Vector2(6, 6)
+texture = ExtResource("4_8r1wq")
+
+[node name="agiupg" type="Button" parent="Panel/agi" unique_id=1375372682]
+offset_left = 102.0
+offset_top = 603.0
+offset_right = 195.0
+offset_bottom = 639.0
+theme_override_fonts/font = ExtResource("2_032fp")
+text = "Upgrade"
+
+[node name="upgbar" type="AnimatedSprite2D" parent="Panel/agi" unique_id=822404477]
+position = Vector2(662, 551)
+scale = Vector2(3.67, 3.67)
+sprite_frames = SubResource("SpriteFrames_j14q8")
+
+[node name="coins" type="Label" parent="Panel" unique_id=1835099242]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 224.0
+offset_top = 3.0
+offset_right = 592.0
+offset_bottom = 96.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_032fp")
+theme_override_font_sizes/font_size = 50
+text = "Coins: "
+horizontal_alignment = 1
+
+[connection signal="button_down" from="Panel/Button2" to="." method="_on_button_2_button_down"]
+[connection signal="button_down" from="Panel/atk/atkupg" to="." method="_on_atkupg_button_down"]
+[connection signal="button_down" from="Panel/def/defupg" to="." method="_on_defupg_button_down"]
+[connection signal="button_down" from="Panel/agi/agiupg" to="." method="_on_agiupg_button_down"]

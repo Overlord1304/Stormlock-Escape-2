@@ -1,6 +1,6 @@
 extends Area2D
-@export var speed: float = 5
-var player_inside = null
+@export var speed= 5
+var player_inside
 var start_position
 func _ready() -> void:
 	start_position = global_position

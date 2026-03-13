@@ -1,43 +1,41 @@
 extends Node2D
-
-@onready var score_label = $ui/ScoreLabel
-@onready var high_score_label = $ui/HighScoreLabel
-@onready var countdown_label = $ui/CountdownLabel
+@onready var pause_menu = $player/CanvasLayer/pause
+@onready var score_label = $ui/score
+@onready var high_score_label = $ui/highscore
+@onready var countdown_label = $ui/countdown
+@onready var coins_label =$ui/coins
 var has_saved = false
 var countdown_time = 3
 var countdown_active = true
 @onready var player = $player
 func _ready():
 	start_countdown()
-	load_high_score()
+	Global.load_game()
 	Global.score = 0
 	Global.player_died = false
-
+	$TimerShield.wait_time *= Global.shield_upg
 func _process(delta) -> void:
+	
 	if not Global.player_died:
 		check_high_score()
 		score_label.text = "Score: " + str(Global.score)
 		high_score_label.text = "High Score: " + str(Global.high_score)
+		coins_label.text = "Coins: " + str(Global.coins)
 	else:
 		if not has_saved:
-			save_high_score()
+			Global.save_game()
 			has_saved = true
-func load_high_score():
-	var high_score_saves = "user://high_score_saves.save"
-	if FileAccess.file_exists(high_score_saves):
-		var file = FileAccess.open(high_score_saves,FileAccess.READ)
-		Global.high_score = int(file.get_as_text())
-		file.close()
-
+func _input(event):
+	if event.is_action_pressed("pause"):
+		pause_game()
+func pause_game():
+	get_tree().paused= true
+	pause_menu.show()
 func check_high_score():
 	if Global.score > Global.high_score:
 		Global.high_score = Global.score
 		
-func save_high_score():
-	var high_score_saves = "user://high_score_saves.save"
-	var file = FileAccess.open(high_score_saves,FileAccess.WRITE)
-	file.store_string(str(Global.high_score))
-	file.close()
+
 func start_countdown():
 	countdown_label.show()
 
@@ -61,7 +59,6 @@ func _on_timer_lightning_timeout() -> void:
 func _on_timer_damage_timeout() -> void:
 	Global.damage_buff = false
 	$ui/sword.fade_out()
-
 func _on_timer_shield_timeout() -> void:
 	Global.shield_buff = false
 	$ui/shield.fade_out()

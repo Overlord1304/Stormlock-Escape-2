@@ -28,13 +28,13 @@ var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
 var is_attacking = false
-var laser_active := false
-var laser_has_hit_player := false
+var laser_active = false
+var laser_has_hit_player = false
 
 
-var warning_facing_right: bool = false
+var warning_facing_right = false
 
-var laser_cooldown_timer: Timer
+var laser_cooldown_timer
 var can_fire_laser = true
 
 signal died
@@ -272,7 +272,7 @@ func deal_with_damage():
 	if player_inattack_zone and Global.player_current_attack == true:
 		if can_take_damage == true:
 			if Global.damage_buff:
-				health -= 40
+				health -= 40* Global.damage_upg
 			else:
 				health -= 20
 			$take_damage_cooldown.start()
@@ -308,7 +308,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		is_attacking = false
 
 	if is_dead and $AnimatedSprite2D.animation == "death":
-		Global.score += 20
+		Global.score += 40
+		Global.coins += 20
 		died.emit()
 		queue_free()
 
