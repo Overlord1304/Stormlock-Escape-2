@@ -120,9 +120,10 @@ func deal_with_damage():
 	if player_inattack_zone and Global.player_current_attack:
 		if can_take_damage:
 			if Global.damage_buff:
-				health -= 40 * Global.damage_upg
+				health -= 40 * Global.dmg_upg * Global.atk_upg
 			else:
-				health -= 20
+				health -= 20 * Global.dmg_upg
+				print(20*Global.dmg_upg)
 			can_take_damage = false
 			$take_damage_cooldown.start()
 
@@ -143,14 +144,12 @@ func die():
 	is_dead = true
 	player_chase = false
 	can_take_damage = false
-
 	$CollisionShape2D.disabled = true
 	$hitbox/right.disabled = true
 	$hitbox/left.disabled = true
-
 	$AnimatedSprite2D.stop()
 	$AnimatedSprite2D.play("death")
-
+	Global.save_game()
 func _on_animated_sprite_2d_animation_finished():
 	if is_dead and $AnimatedSprite2D.animation == "death":
 		Global.score += 30

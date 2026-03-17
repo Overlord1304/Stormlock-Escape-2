@@ -11,9 +11,21 @@ var coins = 0
 var atkupg_cost = 10
 var defupg_cost = 10
 var agiupg_cost = 10
-var speed_upg = 1
-var damage_upg = 1
-var shield_upg = 1
+var atkupgbar = 0
+var defupgbar = 0
+var agiupgbar = 0
+var agi_upg = 1
+var atk_upg = 1
+var def_upg = 1
+var dmgupg_cost = 10
+var foodupg_cost = 10
+var spdupg_cost = 10
+var dmgupgbar = 0
+var foodupgbar = 0
+var spdupgbar = 0
+var dmg_upg = 1
+var food_upg = 1
+var spd_upg = 1
 func save_game():
 	var data = {
 		"high_score": high_score,
@@ -21,9 +33,21 @@ func save_game():
 		"atkupg_cost": atkupg_cost,
 		"defupg_cost": defupg_cost,
 		"agiupg_cost": agiupg_cost,
-		"speed_upg": speed_upg,
-		"damage_upg": damage_upg,
-		"shield_upg": shield_upg
+		"agi_upg": agi_upg,
+		"atk_upg": atk_upg,
+		"def_upg": def_upg,
+		"atkupgbar": atkupgbar,
+		"defupgbar": defupgbar,
+		"agiupgbar": agiupgbar,
+		"dmgupg_cost": dmgupg_cost,
+		"foodupg_cost": foodupg_cost,
+		"spdupg_cost": spdupg_cost,
+		"spd_upg": spd_upg,
+		"dmg_upg": dmg_upg,
+		"food_upg": food_upg,
+		"dmgupgbar": dmgupgbar,
+		"foodupgbar": foodupgbar,
+		"spdupgbar": spdupgbar
 	}
 	var file = FileAccess.open("user://save_data.save", FileAccess.WRITE)
 	file.store_var(data)
@@ -41,9 +65,21 @@ func load_game():
 			atkupg_cost = data.get("atkupg_cost",10)
 			defupg_cost = data.get("defupg_cost",10)
 			agiupg_cost = data.get("agiupg_cost",10)
-			speed_upg = data.get("speed_upg",1)
-			damage_upg = data.get("damage_upg",1)
-			shield_upg = data.get("shield_upg",1)
+			agi_upg = data.get("agi_upg",1)
+			atk_upg = data.get("atk_upg",1)
+			def_upg = data.get("def_upg",1)
+			atkupgbar = data.get("atkupgbar",0)
+			defupgbar = data.get("defupgbar",0)
+			agiupgbar = data.get("agiupgbar",0)
+			dmgupg_cost = data.get("dmgupg_cost",10)
+			foodupg_cost = data.get("foodupg_cost",10)
+			spdupg_cost = data.get("spdupg_cost",10)
+			spd_upg = data.get("spd_upg",1)
+			dmg_upg = data.get("dmg_upg",1)
+			food_upg = data.get("food_upg",1)
+			dmgupgbar = data.get("dmgupgbar",0)
+			foodupgbar = data.get("foodupgbar",0)
+			spdupgbar = data.get("spdupgbar",0)
 	else:
 		save_game()
 		

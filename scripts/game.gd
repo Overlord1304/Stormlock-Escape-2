@@ -4,29 +4,26 @@ extends Node2D
 @onready var high_score_label = $ui/highscore
 @onready var countdown_label = $ui/countdown
 @onready var coins_label =$ui/coins
-var has_saved = false
 var countdown_time = 3
-var countdown_active = true
+
 @onready var player = $player
 func _ready():
+	get_tree().paused = false
 	start_countdown()
 	Global.load_game()
 	Global.score = 0
 	Global.player_died = false
-	$TimerShield.wait_time *= Global.shield_upg
+	$TimerShield.wait_time *= Global.def_upg
 func _process(delta) -> void:
-	
 	if not Global.player_died:
 		check_high_score()
+		Global.save_game()
 		score_label.text = "Score: " + str(Global.score)
 		high_score_label.text = "High Score: " + str(Global.high_score)
 		coins_label.text = "Coins: " + str(Global.coins)
-	else:
-		if not has_saved:
-			Global.save_game()
-			has_saved = true
+
 func _input(event):
-	if event.is_action_pressed("pause"):
+	if event.is_action_pressed("pause") and player.can_move:
 		pause_game()
 func pause_game():
 	get_tree().paused= true
@@ -42,8 +39,6 @@ func start_countdown():
 	for i in range(countdown_time, 0, -1):
 		countdown_label.text = str(i)
 		await get_tree().create_timer(1.0).timeout
-	
-	countdown_label.text = "Go!"
 	
 	countdown_label.hide()
 

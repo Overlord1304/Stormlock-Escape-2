@@ -105,9 +105,9 @@ func deal_with_damage():
 	if player_inattack_zone and Global.player_current_attack == true:
 		if can_take_damage == true:
 			if Global.damage_buff:
-				health -= 40 * Global.damage_upg
+				health -= 40 * Global.dmg_upg * Global.atk_upg
 			else:
-				health -= 20
+				health -= 20 * Global.dmg_upg
 			$take_damage_cooldown.start()
 			can_take_damage = false
 			if health <= 0 and not is_dead:
@@ -134,6 +134,7 @@ func die():
 	can_take_damage = false
 	$AnimatedSprite2D.stop()
 	$AnimatedSprite2D.play("death")
+	Global.save_game()
 	$hitbox/hitbox.disabled = true
 	
 

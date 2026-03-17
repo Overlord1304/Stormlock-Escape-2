@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c2rfsvpt32ies" path="res://scenes/purpleslime.tscn" id="2_nlygy"]
 
 [node name="help1" type="Control" unique_id=652727400]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,6 +155,7 @@ position = Vector2(493, 339)
 scale = Vector2(3, 3)
 
 [node name="Label8" type="Label" parent="Panel" unique_id=1771691451]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

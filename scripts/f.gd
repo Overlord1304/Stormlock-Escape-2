@@ -9,14 +9,13 @@ var idle_walking = true
 var force_idle = false
 var storm = null
 var storm_avoid_distance = 120
-var speed = 80
+var speed = 60
 var player_chase = false
 var player = null
-var health = 60
+var health = 150
 var player_inattack_zone = false
 var can_take_damage = true
 var is_dead = false
-var is_attacking = false
 
 signal died
 func _physics_process(delta):
@@ -34,7 +33,6 @@ func _physics_process(delta):
 
 		elif player_chase and player:
 			nav_agent.target_position = player.global_position
-
 		else:
 			idle_timer += delta
 			if idle_walking:
@@ -52,6 +50,7 @@ func _physics_process(delta):
 					idle_walking = true
 					idle_direction *= -1
 					force_idle = false
+
 		if not nav_agent.is_navigation_finished():
 			var next_point = nav_agent.get_next_path_position()
 			var direction = (next_point - global_position).normalized()
@@ -59,8 +58,6 @@ func _physics_process(delta):
 
 			if player_chase and player:
 				var dist = global_position.distance_to(player.global_position)
-
-		
 				var slow_radius = 48.0
 
 				if dist < slow_radius:
@@ -69,19 +66,13 @@ func _physics_process(delta):
 
 			desired_velocity = direction * final_speed
 
-		if force_idle:
-			velocity.x = 0
+		
 		var acceleration = 800.0
 		velocity = velocity.move_toward(desired_velocity, acceleration * delta)
 
 		move_and_slide()
-
-		if not is_attacking:
-			if velocity.length() > 5:
-				$AnimatedSprite2D.play("move")
-				$AnimatedSprite2D.flip_h = velocity.x < 0
-			else:
-				$AnimatedSprite2D.play("idle")
+		$AnimatedSprite2D.play("idle")
+		$AnimationPlayer.play("flame")
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):
 		player = body
@@ -109,7 +100,7 @@ func deal_with_damage():
 	if player_inattack_zone and Global.player_current_attack == true:
 		if can_take_damage == true:
 			if Global.damage_buff:
-				health -= 40 * Global.dmg_upg* Global.atk_upg
+				health -= 40 * Global.dmg_upg * Global.atk_upg
 			else:
 				health -= 20 * Global.dmg_upg
 			$take_damage_cooldown.start()
@@ -126,7 +117,7 @@ func _on_take_damage_cooldown_timeout() -> void:
 func update_health():
 	var healthbar = $healthbar
 	healthbar.value = health
-	if health >= 60:
+	if health >= 80:
 		healthbar.hide()
 	else:
 		healthbar.show()
@@ -139,16 +130,14 @@ func die():
 	$AnimatedSprite2D.stop()
 	$AnimatedSprite2D.play("death")
 	Global.save_game()
-	$hitbox/hitbox.disabled = true
+	$hitbox/CollisionShape2D3.disabled = true
 	
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	if is_attacking and $AnimatedSprite2D.animation == "attack":
-		is_attacking = false
 
 	if is_dead and $AnimatedSprite2D.animation == "death":
-		Global.score += 30
-		Global.coins += 15
+		Global.score += 100
+		Global.coins += 50
 		died.emit()
 		queue_free()
 
@@ -164,8 +153,3 @@ func _on_storm_detector_area_exited(area: Area2D) -> void:
 	if area == storm:
 		
 		storm = null
-func play_attack() -> void:
-	if is_attacking:
-		return
-	is_attacking = true
-	$AnimatedSprite2D.play("attack")

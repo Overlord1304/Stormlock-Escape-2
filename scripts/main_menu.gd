@@ -8,7 +8,6 @@ var dialogue = [
 	{"text": "Welcome to Stormlock Escape 2 where you defeat enemies that come in waves. Click the help menu for instructions :)"},
 ]
 var is_transitioning = false
-
 func _ready():
 	_load_save()
 	dialogue_help()
@@ -56,4 +55,4 @@ func _on_help_button_down() -> void:
 
 
 func _on_shop_button_down() -> void:
-	get_tree().change_scene_to_file("res://scenes/shop.tscn")
+	get_tree().change_scene_to_file("res://scenes/shop1.tscn")

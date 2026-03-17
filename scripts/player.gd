@@ -3,6 +3,7 @@ enum DeathType {
 	SLIME,
 	NORMAL,
 	MECH,
+	FLAME,
 	STORM
 }
 var step_timer = 0.0
@@ -11,11 +12,13 @@ var enemy_inattack_range = false
 var psb_inattack_range = false
 var crab_inattack_range = false
 var mech_inattack_range = false
+var flame_inattack_range = false
 var enemy_attack_cooldown = true
 var health = 100
 var can_move = false
 var crab = null
 var mech = null
+var flame = null
 var attack_ip = false
 var was_moving = false
 @onready var speed = 100
@@ -23,7 +26,8 @@ var was_moving = false
 var direction = Vector2.ZERO
 var last_dir = "down"
 
-
+func _process(delta: float) -> void:
+	speed = 100 * Global.spd_upg
 func _ready():
 	$AnimatedSprite2D.play("idle_down")
 func _physics_process(delta):
@@ -107,7 +111,9 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 			elif body.is_in_group("mech"):
 				mech_inattack_range = true
 				mech = body
-				
+			elif body.is_in_group("flame"):
+				flame_inattack_range = true
+				flame = body
 			enemy_inattack_range = true
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	if body.has_method("enemy"):
@@ -120,7 +126,9 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 			elif body.is_in_group("mech"):
 				mech_inattack_range = false
 				mech = null
-				
+			elif body.is_in_group("flame"):
+				flame_inattack_range = false
+				flame = null
 			enemy_inattack_range = false
 func enemy_attack():
 	if enemy_inattack_range and !Global.shield_buff and enemy_attack_cooldown:
@@ -129,7 +137,7 @@ func enemy_attack():
 		enemy_attack_cooldown = false
 		$attack_cooldown.start()
 		if health <= 0:
-			if crab_inattack_range or mech_inattack_range:
+			if crab_inattack_range or mech_inattack_range or flame_inattack_range:
 				die(DeathType.NORMAL)
 			else:
 				die(DeathType.SLIME)
@@ -209,7 +217,7 @@ func die(death_type: DeathType):
 
 
 func on_food_collected() -> void:
-	health += 50
+	health += 50*Global.food_upg
 	update_health()
 func on_lightning_collected():
 	$"../ui/lightning".reset_and_show()
@@ -217,8 +225,8 @@ func on_lightning_collected():
 		$"../ui/sword".hide()
 	if Global.shield_buff:
 		$"../ui/shield".hide()
-	speed += 100 * Global.speed_upg
-	print(speed)
+	speed += 100 * Global.agi_upg
+
 	$"../TimerLightning".start()
 func on_damage_collected():
 	$"../ui/sword".reset_and_show()
@@ -227,7 +235,7 @@ func on_damage_collected():
 	if Global.shield_buff:
 		$"../ui/shield".hide()
 	Global.damage_buff = true
-	print(Global.damage_upg)
+	
 	$"../TimerDamage".start()
 func on_shield_collected():
 	if Global.damage_buff:
@@ -236,6 +244,6 @@ func on_shield_collected():
 		$"../ui/lightning".hide()
 	$"../ui/shield".reset_and_show()
 	Global.shield_buff = true
-	print($"../TimerShield".wait_time)
+	
 	$"../TimerShield".start()
 	

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b3qrs33t846vt" path="res://scenes/lightning.tscn" id="3_exc4v"]
 
 [node name="Control" type="Control" unique_id=121547807]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -152,6 +153,7 @@ position = Vector2(274, 155)
 scale = Vector2(3, 3)
 
 [node name="Button3" type="Button" parent="Panel" unique_id=548573106]
+process_mode = 3
 layout_mode = 0
 offset_left = 988.0
 offset_top = 577.0

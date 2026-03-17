@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://cu5xwpo5hmbc8"]
+[gd_scene format=3 uid="uid://cu5xwpo5hmbc8"]
 
 [ext_resource type="Script" uid="uid://jsjlqwrdahg0" path="res://scripts/help_2.gd" id="1_5plv3"]
 [ext_resource type="FontFile" uid="uid://dp8n25op4qny" path="res://fonts/pixelsans/PixeloidSansBold-OG894.ttf" id="1_yrody"]
 [ext_resource type="PackedScene" uid="uid://conhi1a8il2xk" path="res://scenes/food.tscn" id="2_sr46x"]
 [ext_resource type="PackedScene" uid="uid://d3qqreh404bjs" path="res://scenes/mb.tscn" id="3_5plv3"]
 
-[node name="Control" type="Control"]
+[node name="Control" type="Control" unique_id=209145112]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5plv3")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1430886800]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,7 +25,7 @@ offset_right = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="Label" type="Label" parent="Panel" unique_id=2023606623]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -39,7 +40,7 @@ theme_override_fonts/font = ExtResource("1_yrody")
 theme_override_font_sizes/font_size = 48
 text = "Instructions"
 
-[node name="Label2" type="Label" parent="Panel"]
+[node name="Label2" type="Label" parent="Panel" unique_id=366882646]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -54,7 +55,7 @@ theme_override_fonts/font = ExtResource("1_yrody")
 theme_override_font_sizes/font_size = 48
 text = "Food:"
 
-[node name="Label3" type="Label" parent="Panel"]
+[node name="Label3" type="Label" parent="Panel" unique_id=636802007]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -69,7 +70,7 @@ theme_override_fonts/font = ExtResource("1_yrody")
 theme_override_font_sizes/font_size = 32
 text = "• There is food scattered around the map"
 
-[node name="Label4" type="Label" parent="Panel"]
+[node name="Label4" type="Label" parent="Panel" unique_id=699518597]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -84,7 +85,7 @@ theme_override_fonts/font = ExtResource("1_yrody")
 theme_override_font_sizes/font_size = 32
 text = "• Each heals 50 health(Max health is 100)"
 
-[node name="Label5" type="Label" parent="Panel"]
+[node name="Label5" type="Label" parent="Panel" unique_id=1313552544]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -99,7 +100,7 @@ theme_override_fonts/font = ExtResource("1_yrody")
 theme_override_font_sizes/font_size = 48
 text = "Bosses:"
 
-[node name="Label6" type="Label" parent="Panel"]
+[node name="Label6" type="Label" parent="Panel" unique_id=820462363]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -115,7 +116,7 @@ theme_override_font_sizes/font_size = 32
 text = "• Enemies get harder as the waves 
 increase"
 
-[node name="Label7" type="Label" parent="Panel"]
+[node name="Label7" type="Label" parent="Panel" unique_id=511300206]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -131,7 +132,7 @@ theme_override_font_sizes/font_size = 32
 text = "• Bosses spawn every 5 waves, and they 
 give more score :D"
 
-[node name="Button" type="Button" parent="Panel"]
+[node name="Button" type="Button" parent="Panel" unique_id=196914600]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 577.0
@@ -140,15 +141,15 @@ offset_bottom = 627.0
 theme_override_fonts/font = ExtResource("1_yrody")
 text = "Previous Page"
 
-[node name="Area2D" parent="Panel" instance=ExtResource("2_sr46x")]
+[node name="Area2D" parent="Panel" unique_id=1849867782 instance=ExtResource("2_sr46x")]
 position = Vector2(267, 151)
 scale = Vector2(4, 4)
 
-[node name="CharacterBody2D2" parent="Panel" instance=ExtResource("3_5plv3")]
+[node name="CharacterBody2D2" parent="Panel" unique_id=213155053 instance=ExtResource("3_5plv3")]
 position = Vector2(355, 336)
 scale = Vector2(2, 2)
 
-[node name="Button2" type="Button" parent="Panel"]
+[node name="Button2" type="Button" parent="Panel" unique_id=988527941]
 layout_mode = 0
 offset_left = 39.0
 offset_top = 24.0
@@ -157,7 +158,8 @@ offset_bottom = 74.0
 theme_override_fonts/font = ExtResource("1_yrody")
 text = "Back To Main Menu"
 
-[node name="Button3" type="Button" parent="Panel"]
+[node name="Button3" type="Button" parent="Panel" unique_id=1005033296]
+process_mode = 3
 layout_mode = 0
 offset_left = 988.0
 offset_top = 577.0
