@@ -18,7 +18,7 @@ extends Node
 ]
 @export var enemies_per_wave = 7
 @export var food_per_wave = 3
-var current_wave = 15
+var current_wave = 0
 var enemies_alive
 var lightning_spawned = false
 var damage_spawned = false
